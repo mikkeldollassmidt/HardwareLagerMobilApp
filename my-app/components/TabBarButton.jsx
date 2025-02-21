@@ -10,7 +10,7 @@ import Animated, {
 } from "react-native-reanimated";
 
 const TabBarButton = (props) => {
-  const { isFocused, label, routeName, color, fontFamily } = props; // Add fontFamily prop
+  const { isFocused, label, routeName, color } = props; 
 
   const scale = useSharedValue(0);
 
@@ -23,10 +23,9 @@ const TabBarButton = (props) => {
 
   return (
     <View style={styles.wrapper}>
-      {/* Gradient Border (Exclude for qrscan) */}
       {isFocused && routeName !== "qrscan" && (
         <LinearGradient
-          colors={["#0891DA", "#08D9C4"]} // Change gradient colors here
+          colors={["#0891DA", "#08D9C4"]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 0 }}
           style={styles.gradientBorder}
@@ -40,11 +39,10 @@ const TabBarButton = (props) => {
           routeName === "qrscan" ? styles.qrScanButton : null,
         ]}
       >
-        {/* Ensure the icon exists before rendering */}
         {icons[routeName] ? (
           <View>{icons[routeName]({ color })}</View>
         ) : (
-          <Text style={{ color: "red" }}>?</Text> // Fallback if icon is missing
+          <Text style={{ color: "red" }}>?</Text>
         )}
       </Pressable>
     </View>
