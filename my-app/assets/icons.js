@@ -13,9 +13,14 @@ export const icons = {
   notifikation: (props) => (
     <Octicons name="bell" size={26} {...props} />
   ),
-  qrscan: (props) => (
-    <SvgUri uri={Asset.fromModule(require('../assets/icons/ScanUnFocused.svg')).uri} width={30} height={30} {...props} />
-  ),
+  qrscan: (props) => {
+    // Conditionally load ScanFocused or ScanUnFocused based on isFocused prop
+    const iconUri = props.isFocused
+      ? require('../assets/icons/ScanFocused.svg') // ScanFocused when focused
+      : require('../assets/icons/ScanUnFocused.svg'); // ScanUnFocused when not focused
+
+    return <SvgUri uri={Asset.fromModule(iconUri).uri} width={30} height={30} {...props} />;
+  },
   konto: (props) => (
     <Feather name="user" size={26} {...props} />
   ),

@@ -14,7 +14,7 @@ const TabBarButton = ({ isFocused, routeName, color, onPress, onLongPress }) => 
         ]}
       >
         {icons[routeName] ? (
-          <View>{icons[routeName]({ color })}</View>
+          <View>{icons[routeName]({ color, isFocused })}</View> // Pass isFocused here
         ) : (
           <Text style={{ color: "red" }}>?</Text>
         )}
