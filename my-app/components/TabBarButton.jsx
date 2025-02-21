@@ -10,7 +10,7 @@ import Animated, {
 } from "react-native-reanimated";
 
 const TabBarButton = (props) => {
-  const { isFocused, label, routeName, color } = props;
+  const { isFocused, label, routeName, color, fontFamily } = props; // Add fontFamily prop
 
   const scale = useSharedValue(0);
 
@@ -21,27 +21,10 @@ const TabBarButton = (props) => {
     );
   }, [scale, isFocused]);
 
-  const animatedIconStyle = useAnimatedStyle(() => {
-    const scaleValue = interpolate(scale.value, [0, 1], [1, 1.2]);
-    const top = interpolate(scale.value, [0, 1], [0, 8]);
-
-    return {
-      transform: [{ scale: scaleValue }],
-      top,
-    };
-  });
-
-  const animatedTextStyle = useAnimatedStyle(() => {
-    const opacity = interpolate(scale.value, [0, 1], [1, 0]);
-    return {
-      opacity,
-    };
-  });
-
   return (
     <View style={styles.wrapper}>
-      {/* Gradient Border */}
-      {isFocused && (
+      {/* Gradient Border (Exclude for qrscan) */}
+      {isFocused && routeName !== "qrscan" && (
         <LinearGradient
           colors={["#0891DA", "#08D9C4"]} // Change gradient colors here
           start={{ x: 0, y: 0 }}
@@ -49,23 +32,20 @@ const TabBarButton = (props) => {
           style={styles.gradientBorder}
         />
       )}
-      
-      <Pressable {...props} style={styles.container}>
-        <Animated.View style={[animatedIconStyle]}>
-          {icons[routeName]({ color })}
-        </Animated.View>
 
-        <Animated.Text
-          style={[
-            {
-              color,
-              fontSize: 11,
-            },
-            animatedTextStyle,
-          ]}
-        >
-          {label}
-        </Animated.Text>
+      <Pressable
+        {...props}
+        style={[
+          styles.container,
+          routeName === "qrscan" ? styles.qrScanButton : null,
+        ]}
+      >
+        {/* Ensure the icon exists before rendering */}
+        {icons[routeName] ? (
+          <View>{icons[routeName]({ color })}</View>
+        ) : (
+          <Text style={{ color: "red" }}>?</Text> // Fallback if icon is missing
+        )}
       </Pressable>
     </View>
   );
@@ -88,7 +68,22 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     gap: 3,
-    paddingVertical: 12,
+    paddingVertical: 17,
+  },
+  qrScanButton: {
+    backgroundColor: "white",
+    borderRadius: 50,
+    width: 70,
+    height: 70,
+    position: "absolute",
+    bottom: -20,
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    elevation: 5,
   },
 });
 

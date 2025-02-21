@@ -5,7 +5,10 @@ import TabBarButton from "./TabBarButton";
 const TabBar = ({ state, descriptors, navigation }) => {
 
   const primaryColor = "#363636";
-  const greyColor = "#999999";
+  const greyColor = "#BDBDBD";
+
+  const fontFamily = "Inter-Bold";
+
   return (
     <View style={styles.tabbar}>
       {state.routes.map((route, index) => {
@@ -50,6 +53,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
             routeName={route.name}
             color={isFocused ? primaryColor : greyColor}
             label={label}
+            fontFamily={fontFamily}
           />
         );
       })}
