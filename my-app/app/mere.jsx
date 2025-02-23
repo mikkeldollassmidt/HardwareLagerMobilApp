@@ -4,16 +4,11 @@ import ColorList from "../components/ColorList";
 
 const Mere = () => {
   return (
-    <View style={styles.container}>
+    <View>
       <ColorList color="#ff00ea"></ColorList>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "white",
-  },
-});
 
 export default Mere;

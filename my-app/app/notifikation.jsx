@@ -4,16 +4,10 @@ import ColorList from "../components/ColorList";
 
 const Notifikation = () => {
   return (
-    <View style={styles.container}>
+    <View>
       <ColorList color="#9403fc"></ColorList>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "white",
-  },
-});
 
 export default Notifikation;

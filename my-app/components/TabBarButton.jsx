@@ -8,7 +8,7 @@ const TabBarButton = ({ isFocused, routeName, color, onPress, onLongPress }) => 
 
   const handlePress = () => {
     if (routeName === "qrscan") {
-      scale.value = withSpring(1.2, { damping: 5, stiffness: 150 }, () => {
+      scale.value = withSpring(1.05, { damping: 2, stiffness: 100 }, () => {
         scale.value = withSpring(1, { damping: 5, stiffness: 150 });
       });
     }

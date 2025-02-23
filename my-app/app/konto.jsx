@@ -4,16 +4,11 @@ import ColorList from "../components/ColorList";
 
 const Konto = () => {
   return (
-    <View style={styles.container}>
+    <View>
       <ColorList color="#00ff51"></ColorList>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "white",
-  },
-});
 
 export default Konto;

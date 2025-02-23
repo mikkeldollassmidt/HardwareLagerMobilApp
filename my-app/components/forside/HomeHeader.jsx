@@ -13,10 +13,15 @@ const Header = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {},
-  headertext: {},
+  container: {
+    marginBottom: 10,
+  },
+  headertext: {
+    color: "#6D6D6D",
+  },
   fullname: {
     fontSize: 35,
+    color: "#363636",
   },
 });
 
