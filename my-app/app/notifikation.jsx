@@ -5,7 +5,7 @@ import ColorList from "../components/ColorList";
 const Notifikation = () => {
   return (
     <View>
-      <ColorList color="#ff00ea"></ColorList>
+      <ColorList color="#9403fc"></ColorList>
     </View>
   );
 };
