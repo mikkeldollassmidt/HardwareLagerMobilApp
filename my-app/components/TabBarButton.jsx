@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingVertical: 17,
-    paddingHorizontal: 20, // Expands the touchable area
+    paddingHorizontal: 20, 
   },
   qrScanButton: {
     backgroundColor: "white",
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   pressed: {
-    opacity: 0.7, // Optional: Adds feedback when button is pressed
+    opacity: 0.7,
   },
 });
 

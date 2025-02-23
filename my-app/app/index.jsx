@@ -1,13 +1,22 @@
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import ColorList from '../components/ColorList'
+import HomeHeader from '../components/forside/HomeHeader'
 
 const Home = () => {
   return (
-    <View>
-      <ColorList color="#0891b2"></ColorList>
+    <View style={styles.container}>
+      <HomeHeader />
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+    backgroundColor: "#fff",
+  },
+});
 
 export default Home
