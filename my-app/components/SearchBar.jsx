@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: "#E7E7E7",
-    borderRadius: 10,
+    borderRadius:8,
     paddingHorizontal: 12,
     paddingVertical: 10,
     fontSize: 16,

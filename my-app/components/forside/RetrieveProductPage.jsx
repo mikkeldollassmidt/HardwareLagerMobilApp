@@ -2,16 +2,15 @@ import { View, Text, StyleSheet, Image } from "react-native";
 import React from "react";
 import Product from "../Product";
 
-// Modify KlikOgHent to accept props for the header text
-const KlikOgHent = ({ headerText }) => {
+const RetrieveProductPage = ({ headerText }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>{headerText}</Text>{" "}
+      <Text style={styles.header}>{headerText}</Text>
       <View style={styles.productContainer}>
-        <Product />
-        <Product />
-        <Product />
-        <Product />
+        <Product imageUrl="https://applegenbrug.dk/wp-content/uploads/2024/04/macbook-air-1466.webp" title="Title" category="Kategori"/>
+        <Product imageUrl="https://applegenbrug.dk/wp-content/uploads/2024/04/macbook-air-1466.webp" title="Title" category="Kategori"/>
+        <Product imageUrl="https://applegenbrug.dk/wp-content/uploads/2024/04/macbook-air-1466.webp" title="Title" category="Kategori"/>
+        <Product imageUrl="https://applegenbrug.dk/wp-content/uploads/2024/04/macbook-air-1466.webp" title="Neger" category="Kategori"/>
       </View>
     </View>
   );
@@ -33,4 +32,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default KlikOgHent;
+export default RetrieveProductPage;

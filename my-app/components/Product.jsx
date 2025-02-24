@@ -1,19 +1,19 @@
 import { View, Text, StyleSheet, Image } from "react-native";
 import React from "react";
 
-const Product = () => {
+const Product = ({imageUrl, title, category}) => {
   return (
     <View style={styles.productBox}>
       <Image
         source={{
-          uri: "https://applegenbrug.dk/wp-content/uploads/2024/04/macbook-air-1466.webp",
+          uri: imageUrl,
         }}
         style={styles.productImage}
       />
-      <Text>Macbook 2029 Black Edition</Text>
+      <Text>{title}</Text>
       <View style={styles.categoryContainer}>
         <Text style={styles.category}>● </Text>
-        <Text style={styles.category}>Computer</Text>
+        <Text style={styles.category}>{category}</Text>
       </View>
     </View>
   );
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   productImage: {
     height: 110,
     width: "100%",
-    borderRadius: 10,
+    borderRadius: 8,
     marginBottom: 5,
   },
   categoryContainer: {
