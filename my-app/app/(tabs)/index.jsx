@@ -1,29 +1,51 @@
-import { ScrollView, View, Text, StyleSheet } from "react-native";
+import { FlatList, View, Text, StyleSheet } from "react-native";
 import React from "react";
-import ColorList from "@/components/ColorList";
 import HomeHeader from "@/components/forside/HomeHeader";
 import SearchBar from "@/components/SearchBar";
 import RetrieveProductPage from "@/components/forside/RetrieveProductPage";
 import BannerButton from "@/components/forside/BannerButton";
 
 const Home = () => {
-  return (
-    <ScrollView
-      contentContainerStyle={styles.scrollContent}
-      showsVerticalScrollIndicator={false}
-    >
-      <View style={styles.container}>
-        <HomeHeader />
-        <SearchBar />
+  // Define the data for the sections you want to render
+  const data = [
+    { id: "1", headerText: "Klik og hent", startIndex: 0 },
+    { id: "3", headerText: "Banner", type: "banner" }, // Add banner section here
+    { id: "2", headerText: "Mest Lånte", startIndex: 4 },
+  ];
+
+  const renderItem = ({ item }) => {
+    if (item.type === "banner") {
+      // Render BannerButton when item type is 'banner'
+      return <BannerButton />;
+    }
+
+    return (
+      <View style={styles.section}>
         <RetrieveProductPage
-          headerText="Klik og hent"
+          headerText={item.headerText}
           limit={4}
-          startIndex={0}
+          startIndex={item.startIndex}
         />
-        <BannerButton />
-        <RetrieveProductPage headerText="Mest Lånte" limit={4} startIndex={4} />
       </View>
-    </ScrollView>
+    );
+  };
+
+  return (
+    <FlatList
+      style={styles.container}
+      data={data}
+      renderItem={renderItem}
+      keyExtractor={(item) => item.id}
+      ListHeaderComponent={
+        <>
+          <HomeHeader />
+          <SearchBar />
+        </>
+      }
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={styles.scrollContent}
+      ListFooterComponent={<View style={styles.footerSpacing} />} // Add additional footer spacing
+    />
   );
 };
 
@@ -34,7 +56,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   scrollContent: {
-    paddingBottom: 80,
+    paddingBottom: 80, // Optional: keeps bottom padding in content area
+  },
+  footerSpacing: {
+    height: 50, // Adjust this value to add extra space at the bottom of the list
   },
 });
 

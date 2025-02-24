@@ -8,7 +8,7 @@ const SearchBar = () => {
   return (
     <View style={styles.container}>
       <TextInput
-        style={styles.input}
+        style={[styles.input, isFocused && styles.inputFocused]} // Style change on focus
         placeholder="Søg..."
         placeholderTextColor="#888"
         onFocus={() => setIsFocused(true)}
@@ -32,11 +32,13 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: "#E7E7E7",
-    borderRadius:8,
+    borderRadius: 8,
     paddingHorizontal: 12,
     paddingVertical: 10,
     fontSize: 16,
     flex: 1,
+    height: 45,
+    paddingRight: 75,
   },
   icon: {
     position: "absolute",
