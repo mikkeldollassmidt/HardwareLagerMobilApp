@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Image } from "react-native";
 import React from "react";
 
-const Product = ({imageUrl, title, category}) => {
+const Product = ({ imageUrl, title, category }) => {
   return (
     <View style={styles.productBox}>
       <Image
@@ -10,7 +10,9 @@ const Product = ({imageUrl, title, category}) => {
         }}
         style={styles.productImage}
       />
-      <Text>{title}</Text>
+      <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
+        {title}
+      </Text>
       <View style={styles.categoryContainer}>
         <Text style={styles.category}>● </Text>
         <Text style={styles.category}>{category}</Text>
@@ -35,6 +37,11 @@ const styles = StyleSheet.create({
   },
   category: {
     fontSize: 12,
+  },
+  title: {
+    fontWeight: "700",
+    fontSize: 14, // Adjust as needed
+    width: "100%", // Ensures text doesn't overflow its container
   },
 });
 
