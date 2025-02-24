@@ -7,23 +7,29 @@ import RetrieveProductPage from "@/components/forside/RetrieveProductPage";
 import BannerButton from "@/components/forside/BannerButton";
 
 const Home = () => {
-  return (
-    <View style={styles.container}>
-      <HomeHeader />
-      <SearchBar />
-      <RetrieveProductPage headerText="Klik og hent" />
-      <BannerButton />
-      <RetrieveProductPage headerText="Mest lånte" />
-    </View>
-  );
+    return (
+        <View style={styles.container}>
+            <HomeHeader />
+            <SearchBar />
+            <RetrieveProductPage
+                headerText="Klik og hent"
+                limit={4}
+                startIndex={0}
+            />      <BannerButton />
+            <RetrieveProductPage
+                headerText="Mest Lånte"
+                limit={4}
+                startIndex={4}
+            />          </View>
+    );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 20,
-    paddingVertical: 20,
-    backgroundColor: "#fff",
-  },
+    container: {
+        paddingHorizontal: 20,
+        paddingVertical: 20,
+        backgroundColor: "#fff",
+    },
 });
 
 export default Home;
