@@ -8,9 +8,9 @@ import BannerButton from "@/components/forside/BannerButton";
 const Home = () => {
   // Define the data for the sections you want to render
   const data = [
-    { id: "1", headerText: "Klik og hent", startIndex: 0 },
+    { id: "1", headerText: "Klik og hent", startIndex: 0, endpointType: "available" }, // Set endpointType to "available"
     { id: "3", headerText: "Banner", type: "banner" }, // Add banner section here
-    { id: "2", headerText: "Mest Lånte", startIndex: 4 },
+    { id: "2", headerText: "Mest Lånte", startIndex: 0, endpointType: "all" }, // Set endpointType to "all"
   ];
 
   const renderItem = ({ item }) => {
@@ -25,6 +25,7 @@ const Home = () => {
           headerText={item.headerText}
           limit={4}
           startIndex={item.startIndex}
+          endpointType={item.endpointType} // Pass endpointType to RetrieveProductPage
         />
       </View>
     );
@@ -50,17 +51,16 @@ const Home = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 20,
-    paddingVertical: 20,
-    backgroundColor: "#fff",
-  },
-  scrollContent: {
-    paddingBottom: 80, // Optional: keeps bottom padding in content area
-  },
-  footerSpacing: {
-    height: 50, // Adjust this value to add extra space at the bottom of the list
-  },
-});
-
+    container: {
+      paddingHorizontal: 20,
+      paddingVertical: 20,
+      backgroundColor: "#fff",
+    },
+    scrollContent: {
+      paddingBottom: 80, // Optional: keeps bottom padding in content area
+    },
+    footerSpacing: {
+      height: 50, // Adjust this value to add extra space at the bottom of the list
+    },
+  });
 export default Home;
