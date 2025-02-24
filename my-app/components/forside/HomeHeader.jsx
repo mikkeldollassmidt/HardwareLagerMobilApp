@@ -4,23 +4,37 @@ import ActiveLoanHeader from "./ActiveLoanHeader";
 import getUserData from "../Helpers/getUserInformation";
 
 const Header = () => {
-  // State to store the user's fullname
-  const [userFullName, setUserFullName] = useState("");
+  const [displayName, setDisplayName] = useState("");
 
   useEffect(() => {
-    // Fetch user data when component mounts
     const fetchUserData = async () => {
-      const fullname = await getUserData(); // Call the helper to get user data
-      setUserFullName(fullname); // Store fullname in state
+      const fullname = await getUserData();
+      const formattedName = formatName(fullname);
+      setDisplayName(formattedName);
     };
 
     fetchUserData();
-  }, []); // Empty dependency array ensures this runs once on component mount
+  }, []);
+
+  // Function to format the name
+  const formatName = (fullname) => {
+    if (!fullname) return "";
+
+    const nameParts = fullname.trim().split(/\s+/); // Split name into words and remove extra spaces
+    if (nameParts.length === 1) {
+      return nameParts[0]; // If only one name, return it as is
+    }
+
+    const firstName = nameParts[0]; // First name
+    const lastName = nameParts[nameParts.length - 1]; // Last name
+
+    return `${firstName} ${lastName[0]}.`; // First name + first letter of last name + "."
+  };
 
   return (
     <View style={styles.container}>
       <Text style={styles.headertext}>Hvad kan vi hjælpe dig med i dag?</Text>
-      <Text style={styles.fullname}>{userFullName}</Text>
+      <Text style={styles.fullname}>{displayName}</Text>
       <ActiveLoanHeader />
     </View>
   );
