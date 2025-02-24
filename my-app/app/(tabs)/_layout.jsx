@@ -11,6 +11,7 @@ const tabs_layout = () => {
           name="index"
           options={{
             title: "Forside",
+            headerShown: false,
           }}
         />
         <Tabs.Screen

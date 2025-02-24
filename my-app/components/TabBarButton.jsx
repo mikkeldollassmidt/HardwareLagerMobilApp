@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   pressed: {
-    opacity: 0.7,
+    opacity: 1,
   },
 });
 
