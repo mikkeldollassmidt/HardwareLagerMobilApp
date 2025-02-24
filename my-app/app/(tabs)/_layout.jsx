@@ -2,7 +2,6 @@ import { View, Text, ActivityIndicator } from "react-native";
 import React from "react";
 import { Tabs } from "expo-router";
 import TabBar from "../../components/TabBar";
-import { useFonts } from "expo-font";
 
 const tabs_layout = () => {
     return (
