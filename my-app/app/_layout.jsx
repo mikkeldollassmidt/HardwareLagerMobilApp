@@ -1,47 +1,21 @@
-import { View, Text, StyleSheet } from "react-native";
-import React from "react";
-import { Tabs } from "expo-router";
-import TabBar from "../components/TabBar";
+import { Stack } from "expo-router";
 
-const _layout = () => {
+const Layout = () => {
   return (
-    <>
+    <Stack>
+      {/* Login Screen (No Tabs Here) */}
+      <Stack.Screen 
+        name="index" 
+        options={{ headerShown: false }} // Hide header on login screen
+      />
 
-      <Tabs tabBar={(props) => <TabBar {...props} />}>
-        <Tabs.Screen
-          name="index"
-          options={{
-            title: "Forside",
-            headerShown: false,
-          }}
-        />
-        <Tabs.Screen
-          name="notifikation"
-          options={{
-            title: "Notifikation",
-          }}
-        />
-        <Tabs.Screen
-          name="qrscan"
-          options={{
-            title: "QRScan",
-          }}
-        />
-        <Tabs.Screen
-          name="konto"
-          options={{
-            title: "Konto",
-          }}
-        />
-        <Tabs.Screen
-          name="mere"
-          options={{
-            title: "Mere",
-          }}
-        />
-      </Tabs>
-    </>
+      {/* Main App with Tabs */}
+      <Stack.Screen 
+        name="(tabs)" 
+        options={{ headerShown: false }} // Hide header for tab navigator
+      />
+    </Stack>
   );
 };
 
-export default _layout;
+export default Layout;

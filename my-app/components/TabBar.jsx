@@ -16,11 +16,11 @@ const TabBar = ({ state, descriptors, navigation }) => {
   useEffect(() => {
     // Define static positions for each route
     const staticOffsets = {
-      "index": 0,
-      "notifikation": tabWidth * 1.4, // Move to the right by one tabWidth
-      "qrscan": tabWidth * 2.6, // Move to the right by two tabWidths
-      "konto": tabWidth * 4.18, // You can manually set positions
-      "mere": tabWidth * 5.6,
+      "index": -12,
+      "notifikation": tabWidth - 12, // Move to the right by one tabWidth
+      "qrscan": tabWidth * 1.82, // Move to the right by two tabWidths
+      "konto": tabWidth * 2.85, // You can manually set positions
+      "mere": tabWidth * 3.86,
     };
 
     // Get the position based on the active route
