@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, TextInput, Button, StyleSheet, Alert, ActivityIndicator } from "react-native";
 import { useRouter } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import JWT from "expo-jwt"; // Import the expo-jwt library
 import { loginUser } from "../Api_intergration/userApi"; // Adjust path if needed
 
 const LoginPage = () => {
@@ -11,9 +12,42 @@ const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [tokenCheckCompleted, setTokenCheckCompleted] = useState(false); // New state to track token check
 
-  // LoginPage.js
-const handleLogin = async () => {
+  // Check for valid token when the component mounts
+  useEffect(() => {
+    const checkToken = async () => {
+      const token = await AsyncStorage.getItem("authToken");
+
+      if (token) {
+        try {
+          // Decode the JWT to check the expiration date
+          const decodedToken = JWT.decode(token, "ITDepotHardwareLagerSystemH3ProjektApiOgAndreTingZBC2025Til2027"); // Use the same key as the server's signing key
+
+          const currentTime = Date.now() / 1000; // Get current time in seconds
+          if (decodedToken.exp > currentTime) {
+            // Token is valid
+            router.replace("/(tabs)"); // Redirect to the main tabs if token exists
+          } else {
+            // Token has expired, remove from AsyncStorage
+            await AsyncStorage.removeItem("authToken");
+            Alert.alert("Session Expired", "Your session has expired. Please log in again.");
+          }
+        } catch (error) {
+          // If the token is invalid, just clear it from storage
+          console.error("Invalid token or error decoding", error);
+          await AsyncStorage.removeItem("authToken");
+        }
+      }
+
+      // Mark token check as completed
+      setTokenCheckCompleted(true);
+    };
+
+    checkToken();
+  }, []); // Empty dependency array ensures this runs once when the component mounts
+
+  const handleLogin = async () => {
     setLoading(true);
     try {
       const response = await loginUser(username, password);
@@ -26,12 +60,10 @@ const handleLogin = async () => {
         Alert.alert("Login Failed", "Invalid username or password.");
       }
     } catch (error) {
-  
       if (error.response) {
         if (error.response.status === 401) {
           Alert.alert("Login Failed", "Invalid username or password.");
         } else if (error.response.status === 400) {
-          // Provide more details about the 400 error
           Alert.alert("Fejl i login", `${error.response.data}`);
         } else {
           Alert.alert("Error", "An unexpected error occurred. Please try again.");
@@ -45,6 +77,15 @@ const handleLogin = async () => {
       setLoading(false);
     }
   };
+
+  if (!tokenCheckCompleted) {
+    // Show a loading indicator while checking the token
+    return (
+      <View style={styles.container}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
