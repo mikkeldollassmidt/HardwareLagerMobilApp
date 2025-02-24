@@ -40,8 +40,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: "700",
-    fontSize: 14, // Adjust as needed
-    width: "100%", // Ensures text doesn't overflow its container
+    fontSize: 14,
+    width: "100%",
   },
 });
 
