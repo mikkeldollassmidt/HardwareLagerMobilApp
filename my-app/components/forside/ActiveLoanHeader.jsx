@@ -1,6 +1,11 @@
 import { View, Text, StyleSheet } from "react-native";
 import React from "react";
-import Svg, { Defs, LinearGradient, Stop, Text as SvgText } from "react-native-svg";
+import Svg, {
+  Defs,
+  LinearGradient,
+  Stop,
+  Text as SvgText,
+} from "react-native-svg";
 
 const ActiveLoanHeader = () => {
   return (
@@ -24,9 +29,9 @@ const styles = StyleSheet.create({
   },
   activeText: {
     color: "#08B6CF",
-    fontWeight: 700,
+    fontWeight: 500,
     fontSize: 16,
-  }
+  },
 });
 
 export default ActiveLoanHeader;
