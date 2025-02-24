@@ -26,7 +26,6 @@ const handleLogin = async () => {
         Alert.alert("Login Failed", "Invalid username or password.");
       }
     } catch (error) {
-      console.error("Login error:", error);  // Log full error for debugging
   
       if (error.response) {
         if (error.response.status === 401) {
