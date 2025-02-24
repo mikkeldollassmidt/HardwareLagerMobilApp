@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Image } from "react-native";
 import React from "react";
 
 const BannerButton = () => {
@@ -14,6 +14,10 @@ const BannerButton = () => {
       <View style={styles.buttonContainer}>
         <Text style={styles.button}>Se mere</Text>
       </View>
+      <Image
+        source={require("../../assets/images/NyesteUdstyr.webp")}
+        style={styles.backgroundImage}
+      />
     </View>
   );
 };
@@ -27,12 +31,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    paddingHorizontal: 15,
-    paddingVertical: 10,
     marginBottom: 20,
+    overflow: "hidden",
   },
   textContainer: {
     width: "70%",
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    zIndex: 1,
   },
   buttonContainer: {
     width: "30%",
@@ -40,15 +46,32 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     alignItems: "flex-end",
     height: "100%",
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    zIndex: 1,
   },
   textHeader: {
     fontSize: 18,
+    fontWeight: "bold",
+    color: "white",
+    marginBottom: 2,
+
   },
   textSubheader: {
     fontSize: 13,
+    color: "white",
+
   },
   button: {
     fontSize: 13,
+    color: "white",
+    fontWeight: "bold",
+  },
+  backgroundImage: {
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+    zIndex: 0,
   },
 });
 

@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
   fullname: {
     fontSize: 35,
     color: "#363636",
+    fontWeight: "800",
   },
 });
 
