@@ -64,7 +64,7 @@ const RetrieveProductPage = ({
       <Text style={styles.header}>{headerText}</Text>
 
       {loading ? (
-        <ActivityIndicator size="large" color="#0000ff" />
+        <ActivityIndicator size="large" color="#08B6CF" />
       ) : (
         <FlatList
           style={styles.productContainer}
@@ -89,9 +89,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   header: {
-    fontSize: 20,
+    fontSize: 18,
     color: "#363636",
-    marginBottom: 8,
+    marginBottom: 10,
     fontWeight: "800",
   },
   productContainer: {

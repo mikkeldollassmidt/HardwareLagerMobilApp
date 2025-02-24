@@ -1,7 +1,7 @@
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import React from "react";
 
-const SearchOption = ({ option }) => {
+const SearchOption = ({ option, onPress }) => {
   // Conditional image selection based on the option
   const iconSource =
     option === "Låne periode"
@@ -15,10 +15,13 @@ const SearchOption = ({ option }) => {
       : styles.searchOptionIcon; // Default icon style
 
   return (
-    <View style={styles.searchOption}>
+    <TouchableOpacity
+      style={styles.searchOption}
+      onPress={() => onPress(option)}
+    >
       <Text style={styles.searchOptionText}>{option}</Text>
       <Image source={iconSource} style={iconStyle} />
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -34,7 +37,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   searchOptionText: {
-    fontWeight: 700,
+    fontWeight: "700",
     fontSize: 15,
   },
   searchOptionIcon: {
