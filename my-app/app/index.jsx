@@ -45,8 +45,6 @@ const handleLogin = async () => {
       setLoading(false);
     }
   };
-  
-  
 
   return (
     <View style={styles.container}>
