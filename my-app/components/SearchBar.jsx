@@ -1,3 +1,4 @@
+import React, { useState, useRef } from "react";
 import {
   View,
   TextInput,
@@ -6,14 +7,16 @@ import {
   TouchableOpacity,
   Animated,
 } from "react-native";
-import React, { useState, useRef } from "react";
 import { Ionicons } from "@expo/vector-icons"; // For the search icon
 import SearchOption from "./SearchOption";
+import Popup from "./SearchPopup"; // Import the Popup component
 
 const SearchBar = () => {
   const [isFocused, setIsFocused] = useState(false);
   const [isFilterFlipped, setIsFilterFlipped] = useState(false); // State for filter flip
   const [isSearchOptionsVisible, setIsSearchOptionsVisible] = useState(false); // State for showing/hiding search options
+  const [isModalVisible, setIsModalVisible] = useState(false); // Modal visibility state
+  const [selectedOption, setSelectedOption] = useState(""); // Selected option state
 
   const slideAnim = useRef(new Animated.Value(0)).current; // Initial position for sliding
 
@@ -28,6 +31,25 @@ const SearchBar = () => {
       duration: 300,
       useNativeDriver: false, // we are animating the height, so this cannot be native driver
     }).start();
+  };
+
+  const handleOptionPress = (option) => {
+    setSelectedOption(option); // Set selected option
+    setIsModalVisible(true); // Show the modal
+  };
+
+  const handleCloseModal = () => {
+    setIsModalVisible(false); // Close the modal
+  };
+
+  const handleReset = () => {
+    setIsModalVisible(false); // Reset the modal
+    // Additional reset logic if necessary
+  };
+
+  const handleShowResults = () => {
+    // Add your result showing logic here
+    console.log("Show results clicked");
   };
 
   return (
@@ -62,12 +84,21 @@ const SearchBar = () => {
       >
         {isSearchOptionsVisible && (
           <>
-            <SearchOption option="Kategori" />
-            <SearchOption option="Type" />
-            <SearchOption option="Låne periode" />
+            <SearchOption option="Kategori" onPress={handleOptionPress} />
+            <SearchOption option="Type" onPress={handleOptionPress} />
+            <SearchOption option="Låne periode" onPress={handleOptionPress} />
           </>
         )}
       </Animated.View>
+
+      {/* Use the Popup component here */}
+      <Popup
+        isVisible={isModalVisible}
+        selectedOption={selectedOption}
+        onClose={handleCloseModal}
+        onReset={handleReset}
+        onShowResults={handleShowResults}
+      />
     </View>
   );
 };
