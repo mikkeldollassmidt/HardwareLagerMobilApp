@@ -23,12 +23,13 @@ const Product = ({ imageUrl, title, category }) => {
 
 const styles = StyleSheet.create({
   productBox: {
-    width: "48%",
+    width: 170,
     marginBottom: 15,
+    marginRight: 32,
   },
   productImage: {
     height: 110,
-    width: "100%",
+    width: 170,
     borderRadius: 8,
     marginBottom: 5,
   },
@@ -37,11 +38,13 @@ const styles = StyleSheet.create({
   },
   category: {
     fontSize: 12,
+    color: "#08B6CF",
   },
   title: {
     fontWeight: "700",
     fontSize: 14,
     width: "100%",
+    color: "#363636",
   },
 });
 

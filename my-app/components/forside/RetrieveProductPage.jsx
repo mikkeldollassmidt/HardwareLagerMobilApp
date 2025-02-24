@@ -1,9 +1,24 @@
-import { View, Text, StyleSheet, FlatList, ActivityIndicator } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  ActivityIndicator,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import Product from "../Product";
-import { getAvailableUserHardware, getAllUserHardware } from "../../Api_intergration/userHardwareApi"; // Import both API functions
+import {
+  getAvailableUserHardware,
+  getAllUserHardware,
+} from "../../Api_intergration/userHardwareApi"; // Import both API functions
 
-const RetrieveProductPage = ({ headerText, limit, startIndex, endpointType }) => { // Accept endpointType as a prop
+const RetrieveProductPage = ({
+  headerText,
+  limit,
+  startIndex,
+  endpointType,
+}) => {
+  // Accept endpointType as a prop
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -52,11 +67,12 @@ const RetrieveProductPage = ({ headerText, limit, startIndex, endpointType }) =>
         <ActivityIndicator size="large" color="#0000ff" />
       ) : (
         <FlatList
+          style={styles.productContainer}
           data={products}
           keyExtractor={(item) => item.id.toString()} // Ensure each item has a unique key
           numColumns={2} // Display in two columns
           renderItem={({ item }) => (
-            <Product 
+            <Product
               imageUrl={item.imageUrl || "https://via.placeholder.com/150"} // Default image if missing
               title={item.name || "Unknown Product"} // Adjust according to API fields
               category={item.type || "Unknown Type"}
@@ -69,17 +85,19 @@ const RetrieveProductPage = ({ headerText, limit, startIndex, endpointType }) =>
 };
 
 const styles = StyleSheet.create({
-    container: {
-      marginBottom: 10,
-    },
-    header: {
-      fontSize: 20,
-      color: "#363636",
-      marginBottom: 8,
-      fontWeight: "800",
-    },
-  });
-  
-  
+  container: {
+    marginBottom: 10,
+  },
+  header: {
+    fontSize: 20,
+    color: "#363636",
+    marginBottom: 8,
+    fontWeight: "800",
+  },
+  productContainer: {
+    flexWrap: "wrap",
+    width: "100%",
+  },
+});
 
 export default RetrieveProductPage;
