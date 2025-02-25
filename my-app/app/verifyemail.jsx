@@ -84,17 +84,20 @@ const VerifyEmailPage = () => {
           ))}
         </View>
 
-        {/* Custom Button with Gradient */}
-        <LinearGradient
-          colors={["#0891DA", "#08D9C4"]}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
+        <TouchableOpacity
+          onPress={handleSubmit}
           style={styles.button}
+          activeOpacity={0.7}
         >
-          <TouchableOpacity onPress={handleSubmit} style={styles.buttonContent}>
+          <LinearGradient
+            colors={["#0891DA", "#08D9C4"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={styles.buttonContent}
+          >
             <Text style={styles.buttonText}>Verificer Kode</Text>
-          </TouchableOpacity>
-        </LinearGradient>
+          </LinearGradient>
+        </TouchableOpacity>
 
         <Text style={styles.newUserText}>
           Har du ikke modtaget en kode?{" "}

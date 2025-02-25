@@ -146,23 +146,22 @@ const LoginPage = () => {
           <Text style={styles.forgottenText}>Glemt adgangskode</Text>
         </View>
 
-        {/* Custom Button with Gradient */}
-        <LinearGradient
-          colors={["#0891DA", "#08D9C4"]} // Gradient colors
-          start={{ x: 0, y: 0 }} // Start position of the gradient
-          end={{ x: 1, y: 1 }} // End position of the gradient
-          style={[styles.button, loading && styles.buttonDisabled]}
-        >
-          <TouchableOpacity
-            onPress={handleLogin}
-            disabled={loading}
-            style={styles.buttonContent}
-          >
-            <Text style={styles.buttonText}>
-              {loading ? "Logging in..." : "Log ind"}
-            </Text>
-          </TouchableOpacity>
-        </LinearGradient>
+        <TouchableOpacity
+  onPress={handleLogin}
+  disabled={loading}
+  style={[styles.button, loading && styles.buttonDisabled]} // Ensures the whole button is clickable
+>
+  <LinearGradient
+    colors={["#0891DA", "#08D9C4"]}
+    start={{ x: 0, y: 0 }}
+    end={{ x: 1, y: 1 }}
+    style={styles.buttonContent} // This should be just for the gradient
+  >
+    <Text style={styles.buttonText}>
+      {loading ? "Logging in..." : "Log ind"}
+    </Text>
+  </LinearGradient>
+</TouchableOpacity>
 
         <View style={styles.noticeContainer}>
           <Text style={styles.noticeText}>
