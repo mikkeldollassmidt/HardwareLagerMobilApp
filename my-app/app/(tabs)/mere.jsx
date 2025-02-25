@@ -1,15 +1,12 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Platform } from "react-native";
 import React from "react";
 import Choice from "../../components/mere/Choice";
 
 const Mere = () => {
   return (
     <View style={styles.choiceContainer}>
-      <Choice text="Andet choice" />
-      <Choice text="Andet choice" />
-      <Choice text="Andet choice" />
-      <Choice text="Andet choice" />
-      <Choice text="Andet choice" />
+      <Text style={styles.header}>Mere</Text>
+      <View style={styles.hr} />
       <Choice text="Andet choice" />
       <Choice text="Andet choice" />
       <Choice text="Andet choice" />
@@ -23,6 +20,20 @@ const Mere = () => {
 };
 
 const styles = StyleSheet.create({
+  hr: {
+    width: "100%",
+    height: 1,
+    backgroundColor: "#ebebeb",
+    marginBottom: 20,
+  },
+  header: {
+    fontSize: 25,
+    alignText: "left",
+    width: "100%",
+    marginBottom: 10,
+    color: "#08B6CF",
+    fontWeight: 600
+  },
   choiceContainer: {
     flexDirection: "column",
     alignItems: "center",
@@ -30,10 +41,12 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     backgroundColor: "white",
     height: "100%",
+    paddingTop: Platform.OS === "ios" ? 75 : 0, // IOS - ANDROID 
   },
   copyright: {
-    color: "#363636",
+    color: "#9f9f9f",
     fontSize: 13,
+    marginTop: 20
   },
 });
 

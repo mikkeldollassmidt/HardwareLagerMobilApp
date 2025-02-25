@@ -14,7 +14,7 @@ const Choice = ({ text, color = "default" }) => {
 
 const styles = StyleSheet.create({
   choiceBox: {
-    backgroundColor: "#E7E7E7",
+    backgroundColor: "#f2f2f2",
     width: "100%",
     paddingHorizontal: 15,
     paddingVertical: 10,

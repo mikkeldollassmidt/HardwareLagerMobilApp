@@ -1,4 +1,4 @@
-import { FlatList, View, Text, StyleSheet } from "react-native";
+import { FlatList, View, Text, StyleSheet, Platform } from "react-native";
 import React from "react";
 import HomeHeader from "@/components/forside/HomeHeader";
 import SearchBar from "@/components/SearchBar";
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
       paddingHorizontal: 20,
       paddingVertical: 20,
       backgroundColor: "#fff",
-      paddingTop: 70,
+      paddingTop: Platform.OS === "ios" ? 70 : 0, // IOS - ANDROID 
     },
     scrollContent: {
       paddingBottom: 80, // Optional: keeps bottom padding in content area
