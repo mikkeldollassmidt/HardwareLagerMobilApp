@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
       paddingHorizontal: 20,
       paddingVertical: 20,
       backgroundColor: "#fff",
+      paddingTop: 70,
     },
     scrollContent: {
       paddingBottom: 80, // Optional: keeps bottom padding in content area

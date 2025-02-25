@@ -18,7 +18,6 @@ const RetrieveProductPage = ({
   startIndex,
   endpointType,
 }) => {
-  // Accept endpointType as a prop
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -28,27 +27,24 @@ const RetrieveProductPage = ({
         setLoading(true);
 
         const today = new Date();
-        const isoDate = today.toISOString(); // Get current date in ISO format
+        const isoDate = today.toISOString(); 
 
         let data = [];
 
         if (endpointType === "available") {
-          // Fetch available products using the available endpoint
           data = await getAvailableUserHardware({
-            categoryIds: [], // Pass an empty array to include all categories
-            typeIds: [], // Pass an empty array to include all types
-            weeks: 4, // Search for items available for the next 4 weeks
-            searchString: "", // No search filter applied
-            startDate: isoDate, // Start from today
+            categoryIds: [],
+            typeIds: [],
+            weeks: 4,
+            searchString: "",
+            startDate: isoDate,
           });
         } else {
-          // Fetch all user hardware using the getAll endpoint
           data = await getAllUserHardware();
         }
 
-        // Use limit and startIndex props to slice the data
         const slicedData = data.slice(startIndex, startIndex + limit);
-        setProducts(slicedData); // Set the sliced data
+        setProducts(slicedData);
       } catch (error) {
         console.error("Error fetching products:", error);
       } finally {
@@ -57,7 +53,7 @@ const RetrieveProductPage = ({
     };
 
     fetchProducts();
-  }, [limit, startIndex, endpointType]); // Re-fetch when limit, startIndex, or endpointType changes
+  }, [limit, startIndex, endpointType]);
 
   return (
     <View style={styles.container}>
@@ -69,12 +65,13 @@ const RetrieveProductPage = ({
         <FlatList
           style={styles.productContainer}
           data={products}
-          keyExtractor={(item) => item.id.toString()} // Ensure each item has a unique key
-          numColumns={2} // Display in two columns
+          keyExtractor={(item) => item.id.toString()}
+          numColumns={2}
+          columnWrapperStyle={styles.row} // Apply row styling
           renderItem={({ item }) => (
             <Product
-              imageUrl={item.imageUrl || "https://via.placeholder.com/150"} // Default image if missing
-              title={item.name || "Unknown Product"} // Adjust according to API fields
+              imageUrl={item.imageUrl || "https://via.placeholder.com/150"}
+              title={item.name || "Unknown Product"}
               category={item.type || "Unknown Type"}
             />
           )}
@@ -95,8 +92,12 @@ const styles = StyleSheet.create({
     fontWeight: "800",
   },
   productContainer: {
-    flexWrap: "wrap",
     width: "100%",
+  },
+  row: {
+    flex: 1,
+    justifyContent: "space-between", // Ensures proper spacing
+    marginBottom: 10, // Adds spacing between rows
   },
 });
 
