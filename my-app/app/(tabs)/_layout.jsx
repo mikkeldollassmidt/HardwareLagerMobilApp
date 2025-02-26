@@ -17,6 +17,7 @@ const tabs_layout = () => {
         name="notifikation"
         options={{
           title: "Notifikation",
+          headerShown: false,
         }}
       />
       <Tabs.Screen
