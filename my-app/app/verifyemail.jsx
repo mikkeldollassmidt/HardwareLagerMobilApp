@@ -149,8 +149,7 @@ const styles = StyleSheet.create({
   },
   button: {
     borderRadius: 10,
-    paddingVertical: 12,
-    paddingHorizontal: 30,
+    overflow: "hidden",
     alignItems: "center",
   },
   buttonContent: {
@@ -159,8 +158,11 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 16,
+    paddingVertical: 12,
+    width: "100%",
     color: "white",
     fontWeight: "bold",
+    textAlign: "center",
   },
   logo: {
     width: 200,

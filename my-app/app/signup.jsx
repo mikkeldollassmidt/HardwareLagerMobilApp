@@ -43,7 +43,7 @@ const LoginPage = () => {
           placeholder="Bekræft adgangskode"
           secureTextEntry
         />
-<TouchableOpacity style={styles.button} onPress={handleLogin} activeOpacity={0.7}>
+<TouchableOpacity style={styles.button} activeOpacity={0.7}>
   <LinearGradient
     colors={["#0891DA", "#08D9C4"]}
     start={{ x: 0, y: 0 }}
@@ -115,8 +115,7 @@ const styles = StyleSheet.create({
   },
   button: {
     borderRadius: 10,
-    paddingVertical: 12,
-    paddingHorizontal: 30,
+    overflow: "hidden",
     alignItems: "center",
   },
   buttonContent: {
@@ -125,8 +124,11 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 16,
+    paddingVertical: 12,
+    width: "100%",
     color: "white",
     fontWeight: "bold",
+    textAlign: "center",
   },
   buttonDisabled: {
     backgroundColor: "#A9A9A9", // Disabled state color
