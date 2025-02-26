@@ -84,17 +84,20 @@ const VerifyEmailPage = () => {
           ))}
         </View>
 
-        {/* Custom Button with Gradient */}
-        <LinearGradient
-          colors={["#0891DA", "#08D9C4"]}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
+        <TouchableOpacity
+          onPress={handleSubmit}
           style={styles.button}
+          activeOpacity={0.7}
         >
-          <TouchableOpacity onPress={handleSubmit} style={styles.buttonContent}>
+          <LinearGradient
+            colors={["#0891DA", "#08D9C4"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={styles.buttonContent}
+          >
             <Text style={styles.buttonText}>Verificer Kode</Text>
-          </TouchableOpacity>
-        </LinearGradient>
+          </LinearGradient>
+        </TouchableOpacity>
 
         <Text style={styles.newUserText}>
           Har du ikke modtaget en kode?{" "}
@@ -146,8 +149,7 @@ const styles = StyleSheet.create({
   },
   button: {
     borderRadius: 10,
-    paddingVertical: 12,
-    paddingHorizontal: 30,
+    overflow: "hidden",
     alignItems: "center",
   },
   buttonContent: {
@@ -156,8 +158,11 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 16,
+    paddingVertical: 12,
+    width: "100%",
     color: "white",
     fontWeight: "bold",
+    textAlign: "center",
   },
   logo: {
     width: 200,

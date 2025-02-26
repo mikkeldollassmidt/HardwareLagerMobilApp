@@ -25,7 +25,6 @@ const styles = StyleSheet.create({
   productBox: {
     width: 170,
     marginBottom: 15,
-    marginRight: 32,
   },
   productImage: {
     height: 110,

@@ -43,17 +43,16 @@ const LoginPage = () => {
           placeholder="Bekræft adgangskode"
           secureTextEntry
         />
-        {/* Custom Button with Gradient */}
-        <LinearGradient
-          colors={["#0891DA", "#08D9C4"]} // Gradient colors
-          start={{ x: 0, y: 0 }} // Start position of the gradient
-          end={{ x: 1, y: 1 }} // End position of the gradient
-          style={styles.button}
-        >
-          <TouchableOpacity style={styles.buttonContent}>
-            <Text style={styles.buttonText}>Opret dig</Text>
-          </TouchableOpacity>
-        </LinearGradient>
+<TouchableOpacity style={styles.button} activeOpacity={0.7}>
+  <LinearGradient
+    colors={["#0891DA", "#08D9C4"]}
+    start={{ x: 0, y: 0 }}
+    end={{ x: 1, y: 1 }}
+    style={styles.buttonContent} // Ensures gradient applies properly
+  >
+    <Text style={styles.buttonText}>Opret dig</Text>
+  </LinearGradient>
+</TouchableOpacity>
         <View style={styles.noticeContainer}>
           <Text style={styles.noticeText}>
             Ved at oprette eller logge ind på en konto, accepterer du vores{" "}
@@ -116,8 +115,7 @@ const styles = StyleSheet.create({
   },
   button: {
     borderRadius: 10,
-    paddingVertical: 12,
-    paddingHorizontal: 30,
+    overflow: "hidden",
     alignItems: "center",
   },
   buttonContent: {
@@ -126,8 +124,11 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 16,
+    paddingVertical: 12,
+    width: "100%",
     color: "white",
     fontWeight: "bold",
+    textAlign: "center",
   },
   buttonDisabled: {
     backgroundColor: "#A9A9A9", // Disabled state color
