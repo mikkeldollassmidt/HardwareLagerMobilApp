@@ -11,7 +11,6 @@ const Mere = () => {
       <Choice text="Andet choice" />
       <Choice text="Andet choice" />
       <Choice text="Andet choice" />
-      <Choice text="Log ud" color="danger" />
       <Text style={styles.copyright}>
         © 2025 ITDepot. Alle rettigheder forbeholdes.
       </Text>
@@ -31,7 +30,7 @@ const styles = StyleSheet.create({
     alignText: "left",
     width: "100%",
     marginBottom: 10,
-    color: "#08B6CF",
+    color: "#363636",
     fontWeight: 600
   },
   choiceContainer: {
