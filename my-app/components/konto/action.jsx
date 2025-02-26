@@ -1,25 +1,25 @@
-import { View, Text, StyleSheet, Image } from "react-native";
-import React from "react";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import React, { useEffect } from "react";
 import * as Icons from "@expo/vector-icons";
 
-const Action = ({ iconLibrary, iconName, title, isRedirect }) => {
-  const checkRedirect = isRedirect === "true";
+const Action = ({ iconLibrary, iconName, title, routePath }) => {
+  const IconComponent = Icons[iconLibrary] || Icons.Feather;
 
-  const IconComponent = Icons[iconLibrary] || Icons.MaterialCommunityIcons;
+  const showImage = title !== "Log ud";
 
   return (
     <View style={styles.actionContainer}>
-      <View style={styles.actionBox}>
-        <IconComponent style={styles.icon} name={iconName} size={23} />
+      <TouchableOpacity onPress={() => {}} style={styles.actionBox}>
+        <IconComponent style={styles.icon} name={iconName} size={20} />
         <Text style={styles.title}>{title}</Text>
 
-        {checkRedirect && (
+        {showImage && (
           <Image
             source={require("../../assets/icons/Dropdown.webp")}
             style={styles.directIcon}
           />
         )}
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -35,11 +35,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     width: "100%",
+    marginBottom: 20,
   },
   icon: {
     color: "#08B6CF",
     backgroundColor: "#D0F6FC",
-    padding: 5,
+    padding: 8,
     borderRadius: 7,
     marginRight: 15,
   },
