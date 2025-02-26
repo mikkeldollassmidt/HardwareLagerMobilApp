@@ -10,5 +10,3 @@ export const loginUser = async (username, password) => {
     throw error;  // Rethrow the error for custom handling in the UI
   }
 };
-
-//TODO: Implement
