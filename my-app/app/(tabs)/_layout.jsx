@@ -29,6 +29,7 @@ const tabs_layout = () => {
         name="konto"
         options={{
           title: "Konto",
+          headerShown: false,
         }}
       />
       <Tabs.Screen
