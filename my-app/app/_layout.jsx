@@ -5,7 +5,7 @@ const Layout = () => {
     <Stack>
       {/* Login Screen (No Tabs Here) */}
       <Stack.Screen
-        name="index"
+        name="login"
         options={{ headerShown: false }} // Hide header on login screen
       />
 
