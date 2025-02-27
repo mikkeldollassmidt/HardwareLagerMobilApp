@@ -36,8 +36,7 @@ const styles = StyleSheet.create({
   choiceContainer: {
     flexDirection: "column",
     alignItems: "center",
-    paddingHorizontal: 20,
-    paddingVertical: 20,
+    padding: 20,
     backgroundColor: "white",
     height: "100%",
     paddingTop: Platform.OS === "ios" ? 75 : 0, // IOS - ANDROID 
