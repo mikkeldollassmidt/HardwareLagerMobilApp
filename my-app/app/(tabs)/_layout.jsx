@@ -46,5 +46,4 @@ const tabs_layout = () => {
 
     );
 };
-
 export default tabs_layout;
