@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
-import JWT from "expo-jwt"; // Import the expo-jwt library
+import { jwtDecode } from "jwt-decode"
 import { Alert } from "react-native";
 
 const AuthContext = createContext();
@@ -14,38 +14,40 @@ export const AuthProvider = ({ children }) => {
     try {
       const token = await AsyncStorage.getItem("authToken");
 
+      // If no token, redirect to login
       if (!token) {
         router.replace("/login");
         return;
       }
 
-      const decodedToken = JWT.decode(
-        token,
-        "ITDepotHardwareLagerSystemH3ProjektApiOgAndreTingZBC2025Til2027"
-      ); // Use the same key as the server's signing key
-      const currentTime = Date.now() / 1000;
+      // Decode the JWT token
+      const decodedToken = jwtDecode(token);  // No need for types in JS
 
+      console.log(decodedToken); // For debugging purposes
+
+      const currentTime = Date.now() / 1000;  // Current time in seconds
+
+      // Check if the token is expired
       if (decodedToken.exp > currentTime) {
-        setTokenCheckCompleted(true);
+        setTokenCheckCompleted(true);  // Token is valid
       } else {
+        // Token has expired
         await AsyncStorage.multiRemove(["authToken", "userId", "fullname"]);
-        Alert.alert(
-          "Session Expired",
-          "Your session has expired. Please log in again."
-        );
+        Alert.alert("Session Expired", "Your session has expired. Please log in again.");
         router.replace("/login");
       }
     } catch (error) {
+      // Handle any errors (e.g., token is malformed)
       console.error("Token validation error:", error);
       await AsyncStorage.multiRemove(["authToken", "userId", "fullname"]);
       router.replace("/login");
     } finally {
-      setTokenCheckCompleted(true); // Ensure this is set correctly in case of errors
+      setTokenCheckCompleted(true);  // Set this to true even if there was an error
     }
   };
 
   useEffect(() => {
-    checkToken();
+    checkToken();  // Perform the token check on component mount
   }, [router]);
 
   return (
