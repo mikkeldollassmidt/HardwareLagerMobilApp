@@ -1,7 +1,42 @@
 import { View, Text, StyleSheet, Image } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";  // Import AsyncStorage
+import { getuserbyid } from "../../Api_intergration/userApi";  // Import getuserbyid
 
-const accountHeader = () => {
+const AccountHeader = () => {
+  const [fullname, setFullname] = useState("");  // State to store fullname
+  const [email, setEmail] = useState("");  // State to store email
+
+  useEffect(() => {
+    // Retrieve fullname from AsyncStorage
+    const fetchFullname = async () => {
+      try {
+        const storedFullname = await AsyncStorage.getItem("fullname");
+        if (storedFullname) {
+          setFullname(storedFullname);
+        }
+      } catch (error) {
+        console.error("Error fetching fullname from storage:", error);
+      }
+    };
+
+    // Fetch user email based on user ID
+    const fetchEmail = async () => {
+      try {
+        const userId = await AsyncStorage.getItem("userId");
+        if (userId) {
+          const userData = await getuserbyid(userId);
+          setEmail(userData.email);  // Assuming the email is in userData.email
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchFullname();
+    fetchEmail();
+  }, []);  // Run this effect only once when the component mounts
+
   return (
     <View style={styles.accountHeader}>
       <View style={styles.outerBorder}>
@@ -16,8 +51,8 @@ const accountHeader = () => {
       </View>
 
       <View style={styles.accountInfo}>
-        <Text style={styles.accountFullname}>Mikkel Otte Dollas Smidt</Text>
-        <Text style={styles.accountEmail}>mikkeldollaskontakt@gmail.com</Text>
+        <Text style={styles.accountFullname}>{fullname}</Text>
+        <Text style={styles.accountEmail}>{email.emailAddress}</Text>
       </View>
     </View>
   );
@@ -28,7 +63,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "start",
     alignItems: "center",
-    marginBottom: 15
+    marginBottom: 15,
   },
   outerBorder: {
     borderWidth: 2,
@@ -60,4 +95,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default accountHeader;
+export default AccountHeader;
