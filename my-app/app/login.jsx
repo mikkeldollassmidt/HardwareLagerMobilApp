@@ -19,11 +19,23 @@ import { LinearGradient } from "expo-linear-gradient";
 const LoginPage = () => {
     const router = useRouter(); // Navigation hook
 
+    const clearStorage = async () => {
+        try {
+            await AsyncStorage.clear();
+            console.log("Storage cleared successfully!");
+        } catch (error) {
+            console.error("Error clearing storage:", error);
+        }
+    };
     // State for username & password
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
 
+    clearStorage();
+    const handleSignUp = () => {
+        router.push("/emailsignup");
+    };
     const handleLogin = async () => {
         setLoading(true);
         try {
@@ -121,8 +133,9 @@ const LoginPage = () => {
 
                 <Text style={styles.newUserText}>
                     Har du ikke en bruger?{" "}
-                    <Text style={styles.newUser}>Opret bruger</Text>
-                </Text>
+                    <TouchableOpacity onPress={handleSignUp} >
+                        <Text style={styles.newUser}>Opret bruger</Text>
+                    </TouchableOpacity></Text>
             </View>
         </View>
     );
