@@ -14,17 +14,13 @@ const BannerButton = () => {
       <View style={styles.buttonContainer}>
         <Text style={styles.button}>Se mere</Text>
       </View>
-      <Image
-        source={require("../../assets/images/NyesteUdstyr.webp")}
-        style={styles.backgroundImage}
-      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#E7E7E7",
+    backgroundColor: "#08B5CF",
     height: "fit-content",
     width: "100%",
     borderRadius: 10,
