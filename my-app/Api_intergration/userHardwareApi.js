@@ -28,7 +28,7 @@ export const getAvailableUserHardware = async ({
 };
 
 // 🟢 Get All User Hardware (No arguments)
-export const getAllUserHardware = async () => {
+export const getMostLoaned = async () => {
   try {
     // Send the GET request to fetch all user hardware
     const response = await axiosInstance.get("/userhardware/GetMostLoaned");

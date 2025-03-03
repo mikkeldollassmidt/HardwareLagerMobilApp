@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, FlatList, ActivityIndicator, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router"; // Import useRouter
 import Product from "../Product";
-import { getAvailableUserHardware, getAllUserHardware, getActiveLoansByUserId } from "../../Api_intergration/userHardwareApi";
+import { getAvailableUserHardware, getMostLoaned, getActiveLoansByUserId } from "../../Api_intergration/userHardwareApi";
 
 const RetrieveProductPage = ({ headerText, limit, startIndex, endpointType, userId }) => {
   const [products, setProducts] = useState([]);
@@ -27,7 +27,7 @@ const RetrieveProductPage = ({ headerText, limit, startIndex, endpointType, user
             startDate: isoDate,
           });
         } else if (endpointType === "all") {
-          data = await getAllUserHardware();
+          data = await getMostLoaned();
         } else if (endpointType === "history" && userId) {
           data = await getActiveLoansByUserId(userId);
         }
