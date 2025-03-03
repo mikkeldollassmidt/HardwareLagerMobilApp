@@ -33,12 +33,13 @@ const RetrieveProductPage = ({ headerText, limit, startIndex, endpointType, user
                     data = await getActiveLoansByUserId(userId);
                 } else if (endpointType === "newest") {
                     data = await getAllHardwares({
-                        hardwarestatusid: null,
-                        typeid: null,
+                        hardwarestatusid: 0,
+                        typeid: 0,
                         IsDescending: true,
                         PageNumber: pageNumber,
                         PageSize: pageSize,
-                    });
+                    },
+                );
                 }
 
                 const slicedData = data.slice(startIndex, startIndex + limit);

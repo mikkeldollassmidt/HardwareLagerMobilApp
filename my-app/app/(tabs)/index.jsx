@@ -32,7 +32,7 @@ const Home = () => {
     );
   };
 
-  if (loading) {  // Show loading spinner until token check is done
+  if (loading) {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color="#0891DA" />
@@ -40,8 +40,8 @@ const Home = () => {
     );
   }
 
-  if (!tokenCheckCompleted) {  // Token check failed
-    return null;  // Or you can handle this case better, like showing a message
+  if (!tokenCheckCompleted) { 
+    return null;
   }
 
   return (

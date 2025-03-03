@@ -1,9 +1,15 @@
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
+import { useRouter } from "expo-router";
 
 const BannerButton = () => {
+  const router = useRouter();
+
   return (
-    <View style={styles.container}>
+    <TouchableOpacity 
+      style={styles.container} 
+      onPress={() => router.push("./searchPage")}
+    >
       <View style={styles.textContainer}>
         <Text style={styles.textHeader}>Nyeste udstyr</Text>
         <Text style={styles.textSubheader}>
@@ -14,7 +20,7 @@ const BannerButton = () => {
       <View style={styles.buttonContainer}>
         <Text style={styles.button}>Se mere</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -51,12 +57,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "white",
     marginBottom: 2,
-
   },
   textSubheader: {
     fontSize: 13,
     color: "white",
-
   },
   button: {
     fontSize: 13,

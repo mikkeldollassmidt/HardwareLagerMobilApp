@@ -4,8 +4,8 @@ import { useRouter, useLocalSearchParams, useNavigation } from "expo-router";
 
 
 const ViewProductPage = () => {
-  const router = useRouter(); // Initialize router to navigate back
-  const params = useLocalSearchParams(); // Use to retrieve params
+  const router = useRouter();
+  const params = useLocalSearchParams();
   const navigation = useNavigation();
   const [product, setProduct] = useState({
     id: null,
@@ -15,13 +15,11 @@ const ViewProductPage = () => {
     description: "",
   });
 
-  // Extract params
   const { id, title, imageUrl, category, description } = params;
   useEffect(() => {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
   useEffect(() => {
-    // Only update state if params have changed or are not empty
     if (
       id !== product.id ||
       title !== product.title ||
