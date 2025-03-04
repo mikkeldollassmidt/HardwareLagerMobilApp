@@ -7,7 +7,7 @@ import axiosInstance from "./axiosInstance";
 export const getAllHardwares = async ({
   hardwarestatusid,
   typeid,
-  IsDescending,
+  IsDecsending,
   PageNumber,
   PageSize,
 }) => {
@@ -16,7 +16,7 @@ export const getAllHardwares = async ({
     const params = {
       hardwarestatusid,
       typeid,
-      IsDescending,
+      IsDecsending,
       PageNumber,
       PageSize,
     };

@@ -31,17 +31,7 @@ const RetrieveProductPage = ({ headerText, limit, startIndex, endpointType, user
                     data = await getAllUserHardware();
                 } else if (endpointType === "history" && userId) {
                     data = await getActiveLoansByUserId(userId);
-                } else if (endpointType === "newest") {
-                    data = await getAllHardwares({
-                        hardwarestatusid: 0,
-                        typeid: 0,
-                        IsDescending: true,
-                        PageNumber: pageNumber,
-                        PageSize: pageSize,
-                    },
-                );
-                }
-
+                } 
                 const slicedData = data.slice(startIndex, startIndex + limit);
                 setProducts(slicedData);
             } catch (error) {
