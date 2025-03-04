@@ -1,9 +1,16 @@
-import { View, Text, StyleSheet, TouchableOpacity, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  FlatList,
+  Image,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "expo-router";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import RetrieveProductPage from "../components/forside/RetrieveProductPage";
+import RetrieveLoanPage from "../components/selaan/RetrieveLoanPage";
 import { getActiveLoansByUserId } from "../Api_intergration/userHardwareApi";
 
 const Selaan = () => {
@@ -19,7 +26,7 @@ const Selaan = () => {
   useEffect(() => {
     const fetchUserId = async () => {
       try {
-        const storedUserId = await AsyncStorage.getItem('userId');
+        const storedUserId = await AsyncStorage.getItem("userId");
         if (storedUserId) {
           setUserId(storedUserId);
         }
@@ -47,7 +54,13 @@ const Selaan = () => {
   }, [userId]); // Only fetch active loans when userId is available
 
   const data = [
-    { id: "1", headerText: "", startIndex: 0, endpointType: "history", userId: userId },
+    {
+      id: "1",
+      headerText: "",
+      startIndex: 0,
+      endpointType: "history",
+      userId: userId,
+    },
   ];
 
   const renderItem = ({ item }) => {
@@ -57,7 +70,7 @@ const Selaan = () => {
 
     return (
       <View style={styles.section}>
-        <RetrieveProductPage
+        <RetrieveLoanPage
           headerText={item.headerText}
           limit={activeLoanCount} // Set the active loan count as the limit here
           startIndex={item.startIndex}
@@ -70,15 +83,22 @@ const Selaan = () => {
 
   return (
     <View style={styles.container}>
-      {/* Back Button */}
-      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-        <AntDesign name="caretleft" size={24} color="black" />
-      </TouchableOpacity>
+      <View style={styles.loanHeader}>
+        <TouchableOpacity
+          style={styles.goBackIconBox}
+          onPress={() => navigation.goBack()}
+        >
+          <Image
+            source={require("../assets/icons/Dropdown.webp")}
+            style={styles.goBackIcon}
+          />
+        </TouchableOpacity>
+        <Text style={styles.text}>Mine lån</Text>
+        <View style={styles.infoIconContainer}>
+          <Text style={styles.infoIcon}>i</Text>
+        </View>
+      </View>
 
-      {/* Page Title */}
-      <Text style={styles.text}>Dine aktive lån</Text>
-
-      {/* RetrieveProductPage Sections */}
       <FlatList
         data={data}
         renderItem={renderItem}
@@ -96,21 +116,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     paddingHorizontal: 20,
-    paddingTop: 80, // Adjust so the back button does not overlap
-  },
-  backButton: {
-    position: "absolute",
-    top: 50,
-    left: 20,
-    padding: 10,
-    zIndex: 10, // Ensure it stays on top
   },
   text: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: "bold",
     color: "#363636",
     textAlign: "center",
-    marginBottom: 20,
   },
   listContent: {
     paddingBottom: 80,
@@ -121,6 +132,39 @@ const styles = StyleSheet.create({
   section: {
     marginBottom: 20,
   },
+  goBackIcon: {
+    height: 15,
+    width: 15,
+    transform: [{ rotate: "90deg" }],
+  },
+  goBackIconBox: {
+    backgroundColor: "#E7E7E7",
+    padding: 10,
+    borderRadius: 8,
+    width: 35,
+    height: 35,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  loanHeader: {
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexDirection: "row",
+  },
+  infoIconContainer: {
+    width: 30,
+    height: 30,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 50,
+    borderWidth: 3,
+    borderColor: "#363636",
+  },
+  infoIcon: {
+    fontSize: 16,
+    fontWeight: 900,
+    color: "#363636"
+  }
 });
 
 export default Selaan;
