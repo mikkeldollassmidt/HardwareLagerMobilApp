@@ -1,4 +1,11 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image, Platform } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Platform,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { useRouter, useLocalSearchParams, useNavigation } from "expo-router";
 
@@ -74,6 +81,34 @@ const productActionPage = () => {
         <View style={styles.descriptionContainer}>
           <Text style={styles.descriptionHeader}>Beskrivelse</Text>
           <Text style={styles.description}>{product.description}</Text>
+        </View>
+        <View style={styles.categoryOuterContainer}>
+          <Text style={styles.categoryHeader}>Kategorier</Text>
+
+          {/* Category: */}
+          <View style={styles.categoryContainer}>
+            <View style={styles.categoryBox}>
+              <Text style={styles.category}>Computer</Text>
+            </View>
+            <View style={styles.categoryBox}>
+              <Text style={styles.category}>Faldskærmsudspring</Text>
+            </View>
+            <View style={styles.categoryBox}>
+              <Text style={styles.category}>Køkkentilbehør</Text>
+            </View>
+            <View style={styles.categoryBox}>
+              <Text style={styles.category}>Fjersny</Text>
+            </View>
+            <View style={styles.categoryBox}>
+              <Text style={styles.category}>Kabler</Text>
+            </View>
+            <View style={styles.categoryBox}>
+              <Text style={styles.category}>Andet</Text>
+            </View>
+            <View style={styles.categoryBox}>
+              <Text style={styles.category}>Gamingudstyr</Text>
+            </View>
+          </View>
         </View>
       </View>
 
@@ -189,7 +224,7 @@ const styles = StyleSheet.create({
     zIndex: 999,
     borderRadius: 8,
     left: 20,
-    top: Platform.OS === 'ios' ? 60 : 20,
+    top: Platform.OS === "ios" ? 60 : 20,
   },
   textHeaderContainer: {
     flexDirection: "row",
@@ -226,6 +261,31 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     color: "white",
     textAlign: "center",
+  },
+  categoryOuterContainer: {
+    flexDirection: "column",
+    marginTop: 10,
+  },
+  categoryContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+  categoryHeader: {
+    fontWeight: 600,
+    marginBottom: 5,
+    color: "#363636",
+  },
+  categoryBox: {
+    backgroundColor: "#D0F6FC",
+    marginRight: 5,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 6,
+    marginBottom: 5,
+  },
+  category: {
+    fontWeight: 500,
+    color: "#08B5CF",
   },
 });
 export default productActionPage;
