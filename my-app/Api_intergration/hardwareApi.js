@@ -40,7 +40,7 @@ export const GetHardwareById = async ({
     };
 
     // Send the GET request
-    const response = await axiosInstance.get("/hardware/GetHardwareById/{id}", { params });
+    const response = await axiosInstance.get("/hardware/GetHardwareById/${id}", { params });
     return response.data;
   } catch (error) {
     console.error("Error fetching hardware data:", error);
