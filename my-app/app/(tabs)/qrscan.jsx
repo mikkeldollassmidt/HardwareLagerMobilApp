@@ -147,11 +147,11 @@ const styles = StyleSheet.create({
   overlayTop: {
     backgroundColor: "rgba(255, 255, 255, 0.85)",
     width: "100%",
-    height: "28%",
     justifyContent: "flex-end",
+    flex: 1
   },
   overlayMiddle: {
-    height: "33%",
+    height: 280,
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
   overlayBottom: {
     backgroundColor: "rgba(255, 255, 255, 0.85)",
     width: "100%",
-    height: "33%",
+    flex: 1
   },
   overlayMiddleFill: {
     width: "100%",
