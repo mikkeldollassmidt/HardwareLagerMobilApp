@@ -29,3 +29,21 @@ export const getAllHardwares = async ({
     throw error;
   }
 };
+
+export const GetHardwareById = async ({
+  hardwareid,
+}) => {
+  try {
+    // Prepare query parameters
+    const params = {
+      hardwareid,
+    };
+
+    // Send the GET request
+    const response = await axiosInstance.get("/hardware/GetHardwareById/{id}", { params });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching hardware data:", error);
+    throw error;
+  }
+};
