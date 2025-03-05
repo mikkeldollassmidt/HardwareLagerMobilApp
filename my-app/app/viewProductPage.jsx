@@ -61,7 +61,7 @@ const ViewProductPage = () => {
       </View>
 
       <View style={styles.buttonContainer}>
-        <Text style={styles.button}>Tjek tilgængelighed</Text>
+        <TouchableOpacity style={styles.button}><Text style={styles.buttonText}>Tjek tilgængelighed</Text></TouchableOpacity>
       </View>
     </View>
   );
@@ -94,14 +94,16 @@ const styles = StyleSheet.create({
     button: {
       backgroundColor: "#08B5CF",
       width: "100%",
-      textAlign: "center",
       padding: 13,
       borderRadius: 10,
-      color: "white",
       position: "absolute",
       top: 15,
+    },
+    buttonText: {
       fontSize: 17,
       fontWeight: "500",
+      color: "white",
+      textAlign: "center",
     },
     textContainer: {
       padding: 20,

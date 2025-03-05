@@ -1,22 +1,6 @@
 import { View, Text, StyleSheet, Image } from "react-native";
 import React from "react";
 
-// <View style={styles.loanBox}>
-//   <Image
-//     source={{
-//       uri: imageUrl,
-//     }}
-//     style={styles.loanImage}
-//   />
-// <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
-//   {title}
-// </Text>
-//   <View style={styles.categoryContainer}>
-//     <Text style={styles.category}>● </Text>
-//     <Text style={styles.category}>{category}</Text>
-//   </View>
-// </View>
-
 const Loan = ({ imageUrl, title, category, isRented, deliveryDate }) => {
   return (
     <View style={styles.loanBox}>

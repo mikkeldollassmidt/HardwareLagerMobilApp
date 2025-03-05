@@ -47,7 +47,7 @@ const RetrieveLoanPage = ({ headerText, limit, startIndex, userId }) => {
                             onPress={() => {
                                 // Pass loan details as params using router.push
                                 router.push({
-                                    pathname: "/qrResultPage",
+                                    pathname: "/productActionPage",
                                     params: {
                                         id: item.id, // Pass the loan id
                                         title: item.name, // Pass the loan name

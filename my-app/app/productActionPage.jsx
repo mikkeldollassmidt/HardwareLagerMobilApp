@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useRouter, useLocalSearchParams, useNavigation } from "expo-router";
 
-const qrResultPage = () => {
+const productActionPage = () => {
   const router = useRouter();
   const params = useLocalSearchParams();
   const navigation = useNavigation();
@@ -25,7 +25,7 @@ const qrResultPage = () => {
       imageUrl !== product.imageUrl ||
       category !== product.category ||
       description !== product.description
-    ) {
+        ) {
       console.log("Received product details:", params);
       setProduct({
         id,
@@ -73,11 +73,21 @@ const qrResultPage = () => {
       </View>
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.loanButton}>
+        {/* <TouchableOpacity style={styles.loanButton}>
           <Text style={styles.loanButtonText}>Lån</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.deliverButton}>
           <Text style={styles.deliverButtonText}>Aflever</Text>
+        </TouchableOpacity> */}
+        <TouchableOpacity
+          style={styles.loanButton}
+          onPress={() => {
+            router.push({
+              pathname: "/qrscan",
+            });
+          }}
+        >
+          <Text style={styles.loanButtonText}>Klik for at scanne</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -102,45 +112,39 @@ const styles = StyleSheet.create({
   buttonContainer: {
     position: "absolute",
     bottom: 0,
-    padding: 20,
-    flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
     alignItems: "center",
     width: "100%",
     height: 100,
+    padding: 20,
   },
   loanButton: {
     backgroundColor: "#08B5CF",
-    textAlign: "center",
+    width: "100%",
     padding: 13,
     borderRadius: 10,
-    color: "white",
-    fontSize: 17,
-    fontWeight: "500",
-    flex: 1,
-    marginRight: 10,
-  },
-  deliverButton: {
-    backgroundColor: "#F0F0F0",
-    textAlign: "center",
-    padding: 13,
-    borderRadius: 10,
-    color: "#363636",
-    fontSize: 17,
-    fontWeight: "500",
-    flex: 1,
+    position: "absolute",
+    top: 15,
   },
   loanButtonText: {
-    textAlign: "center",
-    color: "white",
     fontSize: 17,
     fontWeight: "500",
+    color: "white",
+    textAlign: "center",
+  },
+  deliverButton: {
+    backgroundColor: "#D0F6FC",
+    width: "100%",
+    padding: 13,
+    borderRadius: 10,
+    position: "absolute",
+    top: 15,
   },
   deliverButtonText: {
-    textAlign: "center",
-    color: "#363636",
     fontSize: 17,
     fontWeight: "500",
+    color: "#08B6CF",
+    textAlign: "center",
   },
   textContainer: {
     padding: 20,
@@ -196,4 +200,4 @@ const styles = StyleSheet.create({
     top: 20,
   },
 });
-export default qrResultPage;
+export default productActionPage;
