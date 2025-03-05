@@ -8,13 +8,12 @@ const BannerButton = () => {
   return (
     <TouchableOpacity 
       style={styles.container} 
-      onPress={() => router.push("./searchPage")}
+      onPress={() => router.push({ pathname: "./searchPage", params: { fromBanner: "true" }})}
     >
       <View style={styles.textContainer}>
         <Text style={styles.textHeader}>Nyeste udstyr</Text>
         <Text style={styles.textSubheader}>
-          Klik her for at udforske vores nyeste udstyr, klar til øjeblikkelig
-          brug.
+          Klik her for at udforske vores nyeste udstyr, klar til øjeblikkelig brug.
         </Text>
       </View>
       <View style={styles.buttonContainer}>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Modal,
   View,
@@ -6,10 +6,10 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
-  CheckBox,
 } from "react-native";
-
 import { Entypo } from "@expo/vector-icons";
+import { getAllCategories } from "../Api_intergration/categoryApi";  // Assuming this path
+import { getAllTypes } from "../Api_intergration/typeApi";  // Assuming this path
 
 // Custom Checkbox Component
 const CustomCheckbox = ({ label, isChecked, onChange }) => {
@@ -30,22 +30,55 @@ const Popup = ({
   onReset,
   onShowResults,
 }) => {
-  const [selectedOptions, setSelectedOptions] = useState({
-    Test1: false,
-    Test2: false,
-    Test3: false,
-  });
+  const [selectedOptions, setSelectedOptions] = useState({});
+  const [categories, setCategories] = useState([]); // State to hold categories
+  const [types, setTypes] = useState([]); // State to hold types
+
+  useEffect(() => {
+    if (selectedOption === "Kategori") {
+      getAllCategories()
+        .then((data) => {
+          console.log("Fetched Categories:", data);  // Log the fetched categories
+          setCategories(data);  // Set categories data
+        })
+        .catch((error) => {
+          console.error("Error fetching categories:", error);
+        });
+    } else if (selectedOption === "Type") {
+      getAllTypes()
+        .then((data) => {
+          console.log("Fetched Types:", data);  // Log the fetched types
+          setTypes(data);  // Set types data
+        })
+        .catch((error) => {
+          console.error("Error fetching types:", error);
+        });
+    }
+  }, [selectedOption]);
 
   const handleCheckboxChange = (checkbox) => {
     setSelectedOptions((prev) => ({ ...prev, [checkbox]: !prev[checkbox] }));
   };
 
+  const renderOptions = () => {
+    const data = selectedOption === "Kategori" ? categories : types;
+    return data.map((item) => (
+      <CustomCheckbox
+        key={item.id}  // Make sure 'id' is correct
+        label={item.name}  // Make sure 'name' is correct
+        isChecked={selectedOptions[item.id] || false}
+        onChange={() => handleCheckboxChange(item.id)}
+      />
+    ));
+  };
+
   return (
     <Modal
       visible={isVisible}
-      transparent={true} // No overlay background
+      transparent={true}
       animationType="fade"
-      onRequestClose={onClose} // Prevent closing when tapping outside
+      onRequestClose={onClose}
+      key={selectedOption}  // Forces re-render when 'selectedOption' changes
     >
       <View style={styles.overlay}>
         <View style={styles.popupContainer}>
@@ -60,26 +93,7 @@ const Popup = ({
             </TouchableOpacity>
           </View>
 
-          <View style={styles.checkboxOuterContainer}>
-            <CustomCheckbox
-              label="Test1"
-              isChecked={selectedOptions.Test1}
-              onChange={() => handleCheckboxChange("Test1")}
-              style={styles.checkBoxBox}
-            />
-            <CustomCheckbox
-              label="Test2"
-              isChecked={selectedOptions.Test2}
-              onChange={() => handleCheckboxChange("Test2")}
-              style={styles.checkBoxBox}
-            />
-            <CustomCheckbox
-              label="Test3"
-              isChecked={selectedOptions.Test3}
-              onChange={() => handleCheckboxChange("Test3")}
-              style={styles.checkBoxBox}
-            />
-          </View>
+          <View style={styles.checkboxOuterContainer}>{renderOptions()}</View>
 
           {/* Show Results Button */}
           <TouchableOpacity
@@ -99,7 +113,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.2)", // Black background with 10% opacity
+    backgroundColor: "rgba(0, 0, 0, 0.2)", // Black background with 20% opacity
   },
   popupContainer: {
     width: "87%",
@@ -156,6 +170,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+    flexWrap: "wrap", // Allows the checkboxes to wrap to the next line if needed
   },
   checkboxContainer: {
     flexDirection: "row",
@@ -183,9 +198,11 @@ const styles = StyleSheet.create({
   checked: {
     backgroundColor: "#363636",
   },
-  checkBoxBox: {
-    borderwidth: 2,
-    borderColor: "black",
+  checkmark: {
+    width: 8,
+    height: 8,
+    backgroundColor: "white",
+    borderRadius: 50,
   },
   checkboxLabel: {
     fontSize: 15,

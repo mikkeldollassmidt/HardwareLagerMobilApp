@@ -44,7 +44,7 @@ const ActiveLoanHeader = () => {
             <Text style={styles.activeText}>
                 Du har {activeLoanCount} aktive lån
             </Text>
-            <TouchableOpacity style={styles.button} onPress={() => router.push("/selaan")}>
+            <TouchableOpacity style={styles.button} onPress={() => router.push("/searchPage")}>
                 <Text style={styles.buttonText}>Se mine lån</Text>
             </TouchableOpacity>
         </View>
