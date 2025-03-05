@@ -1,17 +1,42 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image, Platform } from "react-native";
 import React, { useEffect, useState } from "react";
-import { useRouter, useLocalSearchParams } from "expo-router";
+import { useRouter, useLocalSearchParams, useNavigation } from "expo-router";
 
 // Dummy function to simulate fetching product details
 const fetchProductDetails = (id) => {
   const dummyProducts = {
-    101: { title: "Produkt A", imageUrl: "https://via.placeholder.com/400", category: "Kategori 1", description: "Beskrivelse af produkt A" },
-    102: { title: "Produkt B", imageUrl: "https://via.placeholder.com/400", category: "Kategori 2", description: "Beskrivelse af produkt B" },
+    1: {
+      title: "Produkt A",
+      imageUrl:
+        "https://helios-i.mashable.com/imagery/articles/05djrP5PjtVB7CcMtvrTOAP/images-4.fill.size_2000x1125.v1723100793.jpg",
+      category: "Kategori 1",
+      description: "Beskrivelse af produkt A",
+    },
+    2: {
+      title: "Produkt B",
+      imageUrl:
+        "https://images.unsplash.com/photo-1618424181497-157f25b6ddd5?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bGFwdG9wJTIwY29tcHV0ZXJ8ZW58MHx8MHx8fDA%3D",
+      category: "Kategori 2",
+      description: "Beskrivelse af produkt B",
+    },
   };
-  return dummyProducts[id] || { title: "Ukendt produkt", imageUrl: "", category: "Ukendt", description: "Ingen beskrivelse tilgængelig" };
+  return (
+    dummyProducts[id] || {
+      title: "Ukendt produkt",
+      imageUrl: "",
+      category: "Ukendt",
+      description: "Ingen beskrivelse tilgængelig",
+    }
+  );
 };
 
 const productActionPage = () => {
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    navigation.setOptions({ headerShown: false });
+  }, [navigation]);
+
   const router = useRouter();
   const { id } = useLocalSearchParams();
   const [product, setProduct] = useState(null);
@@ -27,8 +52,14 @@ const productActionPage = () => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.goBackIconBox} onPress={() => router.back()}>
-        <Image source={require("../assets/icons/Dropdown.webp")} style={styles.goBackIcon} />
+      <TouchableOpacity
+        style={styles.goBackIconBox}
+        onPress={() => router.back()}
+      >
+        <Image
+          source={require("../assets/icons/Dropdown.webp")}
+          style={styles.goBackIcon}
+        />
       </TouchableOpacity>
 
       <View style={styles.productImageContainer}>
@@ -36,9 +67,20 @@ const productActionPage = () => {
       </View>
 
       <View style={styles.textContainer}>
-        <Text style={styles.headerText}>{product.title}</Text>
-        <Text style={styles.typeText}>{product.category}</Text>
-        <Text>{product.description}</Text>
+        <View style={styles.textHeaderContainer}>
+          <Text style={styles.headerText}>{product.title}</Text>
+          <Text style={styles.typeText}>{product.category}</Text>
+        </View>
+        <View style={styles.descriptionContainer}>
+          <Text style={styles.descriptionHeader}>Beskrivelse</Text>
+          <Text style={styles.description}>{product.description}</Text>
+        </View>
+      </View>
+
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>Tjek tilgængelighed</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -147,7 +189,43 @@ const styles = StyleSheet.create({
     zIndex: 999,
     borderRadius: 8,
     left: 20,
-    top: 20,
+    top: Platform.OS === 'ios' ? 60 : 20,
+  },
+  textHeaderContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 5,
+  },
+  descriptionHeader: {
+    fontSize: 15,
+    fontWeight: 600,
+    color: "#363636",
+  },
+  description: {
+    color: "#363636",
+  },
+  buttonContainer: {
+    position: "absolute",
+    bottom: 0,
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    height: 100,
+    padding: 20,
+  },
+  button: {
+    backgroundColor: "#08B5CF",
+    width: "100%",
+    padding: 13,
+    borderRadius: 10,
+    position: "absolute",
+    top: 15,
+  },
+  buttonText: {
+    fontSize: 17,
+    fontWeight: "500",
+    color: "white",
+    textAlign: "center",
   },
 });
 export default productActionPage;

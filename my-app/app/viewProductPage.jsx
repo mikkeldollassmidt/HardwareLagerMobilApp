@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image, Platform } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useRouter, useLocalSearchParams, useNavigation } from "expo-router";
 
@@ -54,9 +54,9 @@ const ViewProductPage = () => {
           <Text style={styles.typeText}>{product.category}</Text>
         </View>
 
-        <View style={styles.descContainer}>
-          <Text style={styles.descHeader}>Beskrivelse</Text>
-          <Text style={styles.descSubheader}>{product.description}</Text>
+        <View style={styles.descriptionContainer}>
+          <Text style={styles.descriptionHeader}>Beskrivelse</Text>
+          <Text style={styles.description}>{product.description}</Text>
         </View>
       </View>
 
@@ -112,6 +112,7 @@ const styles = StyleSheet.create({
       flexDirection: "row",
       justifyContent: "space-between",
       flexWrap: "wrap",
+      marginBottom: 5,
     },
     headerText: {
       fontSize: 17,
@@ -156,7 +157,15 @@ const styles = StyleSheet.create({
       zIndex: 999,
       borderRadius: 8,
       left: 20,
-      top: 20,
+    top: Platform.OS === 'ios' ? 60 : 20,
+    },
+    descriptionHeader: {
+      fontSize: 15,
+      fontWeight: 600,
+      color: "#363636",
+    },
+    description: {
+      color: "#363636",
     },
   });
 export default ViewProductPage;

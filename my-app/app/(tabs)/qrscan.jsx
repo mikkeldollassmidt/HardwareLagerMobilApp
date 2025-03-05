@@ -1,15 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { View, Text, Button, StyleSheet, Image, Alert } from "react-native";
 import { CameraView, useCameraPermissions } from "expo-camera";
-import { useRouter } from "expo-router";
+import { useNavigation, useRouter } from "expo-router";
+import { useFocusEffect } from "@react-navigation/native";
 
 const QRScan = () => {
   const [permission, requestPermission] = useCameraPermissions();
   const [scanned, setScanned] = useState(false);
   const [scannerText, setScannerText] = useState("Scanner.");
   const router = useRouter();
+  const navigation = useNavigation();
+  let isHandlingScan = false; // Prevents multiple scans
 
-  // Animate "Scanner..." text
+  useEffect(() => {
+    navigation.setOptions({ headerShown: false });
+  }, [navigation]);
+
   useEffect(() => {
     const texts = ["Scanner.", "Scanner..", "Scanner..."];
     let index = 0;
@@ -17,7 +23,6 @@ const QRScan = () => {
       setScannerText(texts[index]);
       index = (index + 1) % texts.length;
     }, 500);
-
     return () => clearInterval(interval);
   }, []);
 
@@ -27,16 +32,24 @@ const QRScan = () => {
     }
   }, [permission]);
 
-  const handleBarCodeScanned = ({ data }) => {
-    if (!scanned) {
-      setScanned(true);
+  useFocusEffect(
+    useCallback(() => {
+      setScanned(false); // Reset scanning when the screen comes back
+      isHandlingScan = false; // Ensure it resets after navigating back
+    }, [])
+  );
 
-      // Check if scanned data is a number
-      if (!isNaN(data) && data.trim() !== "") {
-        router.push(`/productActionPage?id=${data}`);
-      } else {
-        Alert.alert("Ugyldig QR-kode", `Data: ${data}`);
-      }
+  const handleBarCodeScanned = ({ data }) => {
+    if (scanned || isHandlingScan) return; // Prevent duplicate scans
+    isHandlingScan = true;
+    setScanned(true);
+
+    if (!isNaN(data) && data.trim() !== "") {
+      router.push(`/productActionPage?id=${data}`);
+    } else {
+      Alert.alert("Ugyldig QR-kode", `Data: ${data}`);
+      setScanned(false);
+      isHandlingScan = false;
     }
   };
 
@@ -90,7 +103,6 @@ const QRScan = () => {
       ) : (
         <View style={styles.resultContainer}>
           <Text style={styles.resultText}>Scanning...</Text>
-          <Button title="Scan igen" onPress={() => setScanned(false)} />
         </View>
       )}
     </View>
@@ -110,11 +122,11 @@ const styles = StyleSheet.create({
   overlayTop: {
     backgroundColor: "rgba(255, 255, 255, 0.85)",
     width: "100%",
-    height: "28%",
     justifyContent: "flex-end",
+    flex: 1,
   },
   overlayMiddle: {
-    height: "33%",
+    height: 280,
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
@@ -148,7 +160,7 @@ const styles = StyleSheet.create({
   overlayBottom: {
     backgroundColor: "rgba(255, 255, 255, 0.85)",
     width: "100%",
-    height: "33%",
+    flex: 1,
   },
   overlayBottomHeaderContainer: {
     justifyContent: "center",

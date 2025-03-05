@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, Platform } from "react-native";
 import React from "react";
 import AccountHeader from "../../components/konto/AccountHeader";
 import Action from "../../components/konto/action";
@@ -47,6 +47,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 20,
     height: "100%",
+    paddingTop: Platform.OS === 'ios' ? 70 : 0,
+  
   },
 });
 
