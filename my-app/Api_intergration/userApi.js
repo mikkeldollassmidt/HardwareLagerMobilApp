@@ -35,3 +35,16 @@ export const createUser = async (username, hashedPassword, fullname, emailId) =>
     throw error;
   }
 };
+
+export const updateUser = async (id, userData) => {
+    try {
+      const response = await axiosInstance.put(`/user/UpdateUser/${id}`, userData, {
+        headers: {
+          "Content-Type": "application/json-patch+json"
+        }
+      });
+      return response.data;
+    } catch (error) {
+      throw error; // Rethrow for UI handling
+    }
+  };
