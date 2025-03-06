@@ -10,14 +10,13 @@ import React, { useEffect, useState } from "react";
 import { useRouter, useLocalSearchParams, useNavigation } from "expo-router";
 import { scanQrCode } from "../Api_intergration/userHardwareApi";
 
-// Dummy function to simulate fetching product details
 const fetchProductDetails = async (id) => {
     try {
         const data = await scanQrCode(id);
-        console.log(data); // Check if the data is retrieved correctly
+        console.log(data);
         return {
             title: data.hardwareName || "Ukendt produkt",
-            hardwarePicture: data.hardwarePicture, // If API provides imageUrl, replace accordingly
+            hardwarePicture: data.hardwarePicture,
             category: data.hardwareCategory?.[0] || "Ukendt",
             description: data.hardwareDescription || "Ingen beskrivelse tilgængelig",
         };
@@ -47,7 +46,7 @@ const productActionPage = () => {
         if (id) {
             const fetchData = async () => {
                 const productDetails = await fetchProductDetails(id);
-                setProduct(productDetails); // Update state only after the async data fetch completes
+                setProduct(productDetails);
             };
             fetchData();
         }
@@ -55,9 +54,7 @@ const productActionPage = () => {
 
     if (!product) return <Text>Indlæser produkt...</Text>;
 
-    // Check if product.hardwarePicture is valid, otherwise set a fallback
-    const imageSource = product.hardwarePicture ? { uri: product.hardwarePicture } : require("../assets/images/test.webp"); // Assuming placeholder image exists
-
+    const imageSource = product.hardwarePicture ? { uri: product.hardwarePicture } : require("../assets/images/test.webp"); 
     return (
         <View style={styles.container}>
             <TouchableOpacity
