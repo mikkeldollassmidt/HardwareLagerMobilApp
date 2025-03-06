@@ -25,16 +25,8 @@ const fetchProductDetails = async (id) => {
     };
   } catch (error) {
     console.error("Failed to fetch product details:", error);
-    return {
-      title: "Ukendt produkt",
-      hardwarePicture: "",
-      type: "Ukendt",
-      description: "Ingen beskrivelse tilgængelig",
-      categories: [],
-    };
   }
 };
-
 const ProductActionPage = () => {
   const navigation = useNavigation();
   const router = useRouter();
@@ -56,11 +48,19 @@ const ProductActionPage = () => {
   }, [id]);
 
   if (!product) return <Text>Indlæser produkt...</Text>;
+  useEffect(() => {
+    if (id) {
+      const fetchData = async () => {
+        const productDetails = await fetchProductDetails(id);
+        setProduct(productDetails);
+      };
+      fetchData();
+    }
+  }, [id]);
 
   const imageSource = product.hardwarePicture
     ? { uri: product.hardwarePicture }
     : require("../assets/images/test.webp");
-
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -138,9 +138,18 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 15,
   },
-  buttonText: { fontSize: 17, fontWeight: "500", color: "white", textAlign: "center" },
+  buttonText: {
+    fontSize: 17,
+    fontWeight: "500",
+    color: "white",
+    textAlign: "center",
+  },
   textContainer: { padding: 20 },
-  textHeaderContainer: { flexDirection: "row", justifyContent: "space-between", marginBottom: 5 },
+  textHeaderContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 5,
+  },
   headerText: {
     fontSize: 17,
     fontWeight: "bold",
