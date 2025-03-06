@@ -1,8 +1,14 @@
-import { View, Text, StyleSheet } from "react-native";
-import React from "react";
+import { View, Text, StyleSheet, Platform } from "react-native";
+import React, { useEffect } from "react";
 import Notification from "../../components/notifikation/Notification";
+import { useNavigation } from "expo-router";
 
 const Notifikation = () => {
+    const navigation = useNavigation();
+
+  useEffect(() => {
+    navigation.setOptions({ headerShown: false });
+}, [navigation]);
   return (
     <View style={styles.container}>
       <Notification
@@ -37,6 +43,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     height: "100%",
     padding: 20,
+    paddingTop: Platform.OS === 'ios' ? 70 : 0,
   },
 });
 
