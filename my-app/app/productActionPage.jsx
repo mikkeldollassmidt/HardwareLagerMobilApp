@@ -1,4 +1,11 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image, Platform } from "react-native";
+import {
+    View,
+    Text,
+    StyleSheet,
+    TouchableOpacity,
+    Image,
+    Platform,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { useRouter, useLocalSearchParams, useNavigation } from "expo-router";
 import { scanQrCode } from "../Api_intergration/userHardwareApi";
