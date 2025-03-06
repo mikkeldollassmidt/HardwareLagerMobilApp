@@ -107,6 +107,7 @@ const ViewProductPage = () => {
   );
 };
 
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "white",
