@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Image } from "react-native";
 import React from "react";
 
-const Product = ({ imageUrl, title, category }) => {
+const Product = ({ imageUrl, title, type }) => {
   return (
     <View style={styles.productBox}>
       <Image
@@ -15,7 +15,7 @@ const Product = ({ imageUrl, title, category }) => {
       </Text>
       <View style={styles.categoryContainer}>
         <Text style={styles.category}>● </Text>
-        <Text style={styles.category}>{category}</Text>
+        <Text style={styles.category}>{type}</Text>
       </View>
     </View>
   );

@@ -17,11 +17,12 @@ const ViewProductPage = () => {
     id: null,
     title: "",
     imageUrl: "",
-    category: "",
+    type: "",
     description: "",
+    categories: [],
   });
 
-  const { id, title, imageUrl, category, description } = params;
+  const { id, title, imageUrl, type, description } = params;
   useEffect(() => {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
@@ -30,16 +31,18 @@ const ViewProductPage = () => {
       id !== product.id ||
       title !== product.title ||
       imageUrl !== product.imageUrl ||
-      category !== product.category ||
-      description !== product.description
+      type !== product.type ||
+      description !== product.description ||
+      JSON.stringify(product.categories) !== params.category
     ) {
       console.log("Received product details:", params);
       setProduct({
         id,
         title,
         imageUrl,
-        category,
+        type,
         description,
+        categories: params.category ? JSON.parse(params.category) : [],
       });
     }
   }, [
@@ -47,8 +50,9 @@ const ViewProductPage = () => {
     product.id,
     product.title,
     product.imageUrl,
-    product.category,
+    product.type,
     product.description,
+    product.categories,
   ]); // Dependencies to ensure only changes trigger re-render
 
   return (
@@ -70,7 +74,7 @@ const ViewProductPage = () => {
       <View style={styles.textContainer}>
         <View style={styles.headerContainer}>
           <Text style={styles.headerText}>{product.title}</Text>
-          <Text style={styles.typeText}>{product.category}</Text>
+          <Text style={styles.typeText}>{product.type}</Text>
         </View>
 
         <View style={styles.descriptionContainer}>
@@ -80,30 +84,16 @@ const ViewProductPage = () => {
 
         <View style={styles.categoryOuterContainer}>
           <Text style={styles.categoryHeader}>Kategorier</Text>
-
-          {/* Category: */}
           <View style={styles.categoryContainer}>
-            <View style={styles.categoryBox}>
-              <Text style={styles.category}>Computer</Text>
-            </View>
-            <View style={styles.categoryBox}>
-              <Text style={styles.category}>Faldskærmsudspring</Text>
-            </View>
-            <View style={styles.categoryBox}>
-              <Text style={styles.category}>Køkkentilbehør</Text>
-            </View>
-            <View style={styles.categoryBox}>
-              <Text style={styles.category}>Fjersny</Text>
-            </View>
-            <View style={styles.categoryBox}>
-              <Text style={styles.category}>Kabler</Text>
-            </View>
-            <View style={styles.categoryBox}>
-              <Text style={styles.category}>Andet</Text>
-            </View>
-            <View style={styles.categoryBox}>
-              <Text style={styles.category}>Gamingudstyr</Text>
-            </View>
+            {product.categories.length > 0 ? (
+              product.categories.map((cat, index) => (
+                <View key={index} style={styles.categoryBox}>
+                  <Text style={styles.category}>{cat}</Text>
+                </View>
+              ))
+            ) : (
+              <Text style={{ color: "#08B5CF" }}>Ingen kategorier</Text>
+            )}
           </View>
         </View>
       </View>
