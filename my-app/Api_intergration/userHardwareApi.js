@@ -19,7 +19,9 @@ export const getAvailableUserHardware = async ({
     };
 
     // Send the GET request to fetch available hardware
-    const response = await axiosInstance.get("/userhardware/available", { params });
+    const response = await axiosInstance.get("/userhardware/available", {
+      params,
+    });
     return response.data;
   } catch (error) {
     console.error("Error fetching available user hardware:", error);
@@ -40,24 +42,40 @@ export const getAllUserHardware = async () => {
 };
 
 export const getUserLoanHistory = async (id) => {
-    try {
-      // Send the GET request to fetch user loan history by ID
-      const response = await axiosInstance.get(`/userhardware/GetUserLoanHistory/${id}`);
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching user loan history:", error);
-      throw error;
-    }
-  };
-  
-  // 🟢 Get Active Loans By User Id
-  export const getActiveLoansByUserId = async (id) => {
-    try {
-      // Send the GET request to fetch active loans by user ID
-      const response = await axiosInstance.get(`/userhardware/GetActiveLoansByUserId/${id}`);
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching active loans by user ID:", error);
-      throw error;
-    }
-  };
+  try {
+    // Send the GET request to fetch user loan history by ID
+    const response = await axiosInstance.get(
+      `/userhardware/GetUserLoanHistory/${id}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user loan history:", error);
+    throw error;
+  }
+};
+
+// 🟢 Get Active Loans By User Id
+export const getActiveLoansByUserId = async (id) => {
+  try {
+    // Send the GET request to fetch active loans by user ID
+    const response = await axiosInstance.get(
+      `/userhardware/GetActiveLoansByUserId/${id}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching active loans by user ID:", error);
+    throw error;
+  }
+};
+
+export const scanQrCode = async (id) => {
+  try {
+    const response = await axiosInstance.get(
+      `/userhardware/ScanUserHardware/${id}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error in scan:", error);
+    throw error;
+  }
+};
