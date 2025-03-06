@@ -18,19 +18,12 @@ import { LinearGradient } from "expo-linear-gradient";
 
 const LoginPage = () => {
     const router = useRouter(); // Navigation hook
-
-    const clearStorage = async () => {
-        try {
-            await AsyncStorage.clear();
-            console.log("Storage cleared successfully!");
-        } catch (error) {
-            console.error("Error clearing storage:", error);
-        }
-    };
+    
     // State for username & password
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
+
     const handleSignUp = () => {
         router.push("/emailsignup");
     };
