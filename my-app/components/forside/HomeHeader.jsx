@@ -1,34 +1,38 @@
 import { View, Text, StyleSheet } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import ActiveLoanHeader from "./ActiveLoanHeader";
 import getUserData from "../Helpers/getUserInformation";
 
 const Header = () => {
   const [displayName, setDisplayName] = useState("");
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const fullname = await getUserData();
-      const formattedName = formatName(fullname);
-      setDisplayName(formattedName);
-    };
+  const fetchUserData = async () => {
+    const fullname = await getUserData();
+    const formattedName = formatName(fullname);
+    setDisplayName(formattedName);
+  };
 
-    fetchUserData();
-  }, []);
+  // Runs every time the screen is focused
+  useFocusEffect(
+    useCallback(() => {
+      fetchUserData();
+    }, [])
+  );
 
   // Function to format the name
   const formatName = (fullname) => {
     if (!fullname) return "";
 
-    const nameParts = fullname.trim().split(/\s+/); // Split name into words and remove extra spaces
+    const nameParts = fullname.trim().split(/\s+/);
     if (nameParts.length === 1) {
-      return nameParts[0]; // If only one name, return it as is
+      return nameParts[0];
     }
 
-    const firstName = nameParts[0]; // First name
-    const lastName = nameParts[nameParts.length - 1]; // Last name
+    const firstName = nameParts[0];
+    const lastName = nameParts[nameParts.length - 1];
 
-    return `${firstName} ${lastName[0]}.`; // First name + first letter of last name + "."
+    return `${firstName} ${lastName[0]}.`;
   };
 
   return (

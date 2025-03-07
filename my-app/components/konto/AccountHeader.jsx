@@ -1,41 +1,49 @@
-import { View, Text, StyleSheet, Image } from "react-native";
-import React, { useEffect, useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";  // Import AsyncStorage
-import { getuserbyid } from "../../Api_intergration/userApi";  // Import getuserbyid
-
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  DeviceEventEmitter,
+} from "react-native";
+import React, { useState, useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getuserbyid } from "../../Api_intergration/userApi";
 const AccountHeader = () => {
-  const [fullname, setFullname] = useState("");  // State to store fullname
-  const [email, setEmail] = useState("");  // State to store email
+  const [fullname, setFullname] = useState("");
+  const [email, setEmail] = useState("");
+
+  const fetchUserData = async () => {
+    try {
+      const storedFullname = await AsyncStorage.getItem("fullname");
+      if (storedFullname) {
+        setFullname(storedFullname);
+      }
+
+      const userId = await AsyncStorage.getItem("userId");
+      if (userId) {
+        const userData = await getuserbyid(userId);
+        setEmail(userData.email.emailAddress);
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
 
   useEffect(() => {
-    // Retrieve fullname from AsyncStorage
-    const fetchFullname = async () => {
-      try {
-        const storedFullname = await AsyncStorage.getItem("fullname");
-        if (storedFullname) {
-          setFullname(storedFullname);
-        }
-      } catch (error) {
-        console.error("Error fetching fullname from storage:", error);
-      }
-    };
+    fetchUserData();
 
-    // Fetch user email based on user ID
-    const fetchEmail = async () => {
-      try {
-        const userId = await AsyncStorage.getItem("userId");
-        if (userId) {
-          const userData = await getuserbyid(userId);
-          setEmail(userData.email);  // Assuming the email is in userData.email
-        }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
+    // Listen for name updates
+    const listener = DeviceEventEmitter.addListener(
+      "fullnameUpdated",
+      (newFullname) => {
+        setFullname(newFullname);
       }
-    };
+    );
 
-    fetchFullname();
-    fetchEmail();
-  }, []);  // Run this effect only once when the component mounts
+    return () => {
+      listener.remove();
+    };
+  }, []);
 
   return (
     <View style={styles.accountHeader}>
@@ -52,7 +60,7 @@ const AccountHeader = () => {
 
       <View style={styles.accountInfo}>
         <Text style={styles.accountFullname}>{fullname}</Text>
-        <Text style={styles.accountEmail}>{email.emailAddress}</Text>
+        <Text style={styles.accountEmail}>{email}</Text>
       </View>
     </View>
   );
