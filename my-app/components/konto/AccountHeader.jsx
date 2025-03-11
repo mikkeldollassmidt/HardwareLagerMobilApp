@@ -5,13 +5,16 @@ import {
   Image,
   DeviceEventEmitter,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getuserbyid } from "../../Api_intergration/userApi";
+import { useFocusEffect } from "@react-navigation/native";
+
 const AccountHeader = () => {
   const [fullname, setFullname] = useState("");
   const [email, setEmail] = useState("");
 
+  // Get userdata
   const fetchUserData = async () => {
     try {
       const storedFullname = await AsyncStorage.getItem("fullname");
@@ -32,7 +35,7 @@ const AccountHeader = () => {
   useEffect(() => {
     fetchUserData();
 
-    // Listen for name updates
+    // Listen after changes on fullname
     const listener = DeviceEventEmitter.addListener(
       "fullnameUpdated",
       (newFullname) => {
@@ -44,6 +47,13 @@ const AccountHeader = () => {
       listener.remove();
     };
   }, []);
+
+  // Update fullname when the pages is on focus
+  useFocusEffect(
+    useCallback(() => {
+      fetchUserData();
+    }, [])
+  );
 
   return (
     <View style={styles.accountHeader}>
