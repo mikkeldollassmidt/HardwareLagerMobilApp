@@ -7,60 +7,63 @@ import {
   TouchableOpacity,
   Animated,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons"; // For the search icon
+import { Ionicons } from "@expo/vector-icons";
 import SearchOption from "./SearchOption";
-import Popup from "./SearchPopup"; // Import the Popup component
+import Popup from "./SearchPopup";
 
 const SearchBar = () => {
   const [isFocused, setIsFocused] = useState(false);
-  const [isFilterFlipped, setIsFilterFlipped] = useState(false); // State for filter flip
-  const [isSearchOptionsVisible, setIsSearchOptionsVisible] = useState(false); // State for showing/hiding search options
-  const [isModalVisible, setIsModalVisible] = useState(false); // Modal visibility state
-  const [selectedOption, setSelectedOption] = useState(""); // Selected option state
+  const [isFilterFlipped, setIsFilterFlipped] = useState(false);
+  const [isSearchOptionsVisible, setIsSearchOptionsVisible] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedOption, setSelectedOption] = useState("");
+  const [searchText, setSearchText] = useState("");
 
-  const slideAnim = useRef(new Animated.Value(0)).current; // Initial position for sliding
+  const slideAnim = useRef(new Animated.Value(0)).current;
 
   const handleFilterPress = () => {
-    setIsFilterFlipped(!isFilterFlipped); // Flip the filter icon
-    const toValue = isSearchOptionsVisible ? 0 : 45; // Animate to 0 or 45 based on visibility
-    setIsSearchOptionsVisible(!isSearchOptionsVisible); // Toggle visibility of search options
+    setIsFilterFlipped(!isFilterFlipped);
+    const toValue = isSearchOptionsVisible ? 0 : 45;
+    setIsSearchOptionsVisible(!isSearchOptionsVisible);
 
-    // Animate the search options sliding effect
     Animated.timing(slideAnim, {
-      toValue: toValue, // Slide up (0) or down (45)
+      toValue: toValue,
       duration: 300,
-      useNativeDriver: false, // we are animating the height, so this cannot be native driver
+      useNativeDriver: false,
     }).start();
   };
 
   const handleOptionPress = (option) => {
-    setSelectedOption(option); // Set selected option
-    setIsModalVisible(true); // Show the modal
+    setSelectedOption(option);
+    setIsModalVisible(true);
   };
 
   const handleCloseModal = () => {
-    setIsModalVisible(false); // Close the modal
+    setIsModalVisible(false);
   };
 
   const handleReset = () => {
-    setIsModalVisible(false); // Reset the modal
-    // Additional reset logic if necessary
+    setIsModalVisible(false);
   };
 
   const handleShowResults = () => {
-    // Add your result showing logic here
-    console.log("Show results clicked");
+    console.log("Show results clicked with search:", searchText);
+    setIsModalVisible(true); // Open modal when Enter is pressed
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.searchContainer}>
         <TextInput
-          style={[styles.input, isFocused && styles.inputFocused]} // Style change on focus
+          style={[styles.input, isFocused && styles.inputFocused]}
           placeholder="Søg..."
           placeholderTextColor="#888"
+          value={searchText}
+          onChangeText={setSearchText}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
+          onSubmitEditing={handleShowResults} // 🔹 Call handleShowResults on Enter key press
+          returnKeyType="search" // Changes keyboard button to "Search"
         />
         <Ionicons name="search" size={20} color="#363636" style={styles.icon} />
         <TouchableOpacity onPress={handleFilterPress}>
@@ -69,7 +72,7 @@ const SearchBar = () => {
             style={[
               styles.filterIcon,
               { transform: [{ scaleX: isFilterFlipped ? -1 : 1 }] },
-            ]} // Flip horizontally
+            ]}
           />
         </TouchableOpacity>
       </View>
@@ -77,8 +80,8 @@ const SearchBar = () => {
         style={[
           styles.searchOptionContainer,
           {
-            height: slideAnim, // animated height
-            overflow: "hidden", // Hide overflow during animation
+            height: slideAnim,
+            overflow: "hidden",
           },
         ]}
       >
@@ -91,10 +94,11 @@ const SearchBar = () => {
         )}
       </Animated.View>
 
-      {/* Use the Popup component here */}
+      {/* Pass searchText as a prop to Popup */}
       <Popup
         isVisible={isModalVisible}
         selectedOption={selectedOption}
+        searchText={searchText}
         onClose={handleCloseModal}
         onReset={handleReset}
         onShowResults={handleShowResults}
