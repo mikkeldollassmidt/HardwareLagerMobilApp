@@ -13,6 +13,8 @@ const Action = ({ iconLibrary, iconName, title, routePath }) => {
 
     const showImage = title !== "Log ud";
 
+    const route = "/" + routePath;
+
     // Handle Log Out
     const handleLogout = async () => {
         try {
@@ -31,7 +33,7 @@ const Action = ({ iconLibrary, iconName, title, routePath }) => {
     return (
         <View style={styles.actionContainer}>
             <TouchableOpacity
-                onPress={title === "Log ud" ? handleLogout : () => {}}
+                onPress={title === "Log ud" ? handleLogout : () => router.push(route)}
                 style={styles.actionBox}
             >
                 <IconComponent style={styles.icon} name={iconName} size={20} />

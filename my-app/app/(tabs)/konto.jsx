@@ -9,28 +9,24 @@ const Konto = () => {
     <View style={styles.container}>
       <AccountHeader />
       <EditProfileButton />
-      {/* Redirect til aktive lån side */}
       <Action
         iconLibrary="Entypo"
         iconName="laptop"
         title="Aktive lån"
-        routePath=""
+        routePath="selaan"
       />
-      {/* Redirect til lånehistroik side */}
       <Action
         iconLibrary="Fontisto"
         iconName="history"
         title="Lånehistorik"
-        routePath=""
+        routePath="selaan"
       />
-      {/* Redirect til servicevilkår */}
       <Action
         iconLibrary="Feather"
         iconName="file-text"
         title="Servicevilkår"
         routePath=""
       />
-      {/* Redirect til logout */}
       <Action
         iconLibrary="Entypo"
         iconName="log-out"
