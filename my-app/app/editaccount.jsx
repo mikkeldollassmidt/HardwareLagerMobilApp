@@ -65,11 +65,20 @@ const EditAccount = () => {
         fullname,
       });
       console.log("User updated:", updatedUser);
+
+      // Fjern gamle data fra AsyncStorage
+      await AsyncStorage.removeItem("fullname");
+      await AsyncStorage.removeItem("username");
+
+      // Gem de nye data i AsyncStorage
+      await AsyncStorage.setItem("fullname", fullname);
+      await AsyncStorage.setItem("username", username);
+
+      // Gå tilbage til forrige skærm
+      navigation.goBack();
     } catch (error) {
       console.error("Error updating user:", error);
     }
-    await AsyncStorage.setItem("fullname", fullname);
-    navigation.goBack()
   };
 
   return (
