@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Image } from "react-native";
+import React, { useState, useEffect, useCallback } from "react";
+import { Image, Dimensions } from "react-native";
 import {
     View,
     Text,
@@ -7,88 +7,90 @@ import {
     TouchableOpacity,
     StyleSheet,
     Alert,
-    ActivityIndicator,
-    Platform
 } from "react-native";
 import { useRouter } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-// Remove unused import
 import { loginUser } from "../Api_intergration/userApi";
 import { LinearGradient } from "expo-linear-gradient";
+import * as ScreenOrientation from "expo-screen-orientation"; 
+import { useFocusEffect } from "@react-navigation/native"; // Detect page focus
 
 const LoginPage = () => {
-    const router = useRouter(); // Navigation hook
-    
-    // State for username & password
+    const router = useRouter(); 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
+    const [orientation, setOrientation] = useState("portrait");
+
+    // Allow free rotation on login page
+    useFocusEffect(
+        useCallback(() => {
+            const allowRotation = async () => {
+                await ScreenOrientation.unlockAsync(); // Allow all orientations
+            };
+            allowRotation();
+
+            return async () => {
+                await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP); // Lock to portrait after leaving
+            };
+        }, [])
+    );
+
+    // Detect screen orientation
+    useEffect(() => {
+        const updateOrientation = () => {
+            const { height, width } = Dimensions.get("window");
+            setOrientation(height > width ? "portrait" : "landscape");
+        };
+
+        updateOrientation();
+
+        const subscription = Dimensions.addEventListener("change", updateOrientation);
+
+        return () => subscription?.remove();
+    }, []);
 
     const handleSignUp = () => {
         router.push("/emailsignup");
     };
+
     const handleLogin = async () => {
         setLoading(true);
         try {
             const response = await loginUser(username, password);
             if (response?.token) {
-                // Save token, userId, and fullname to AsyncStorage
                 await AsyncStorage.setItem("authToken", response.token);
-                await AsyncStorage.setItem("userId", response.id.toString()); // Storing userId as string
+                await AsyncStorage.setItem("userId", response.id.toString());
                 await AsyncStorage.setItem("fullname", response.fullname);
-
-                // Navigate to the main tab screen
                 router.replace("/(tabs)");
             } else {
                 Alert.alert("Login Failed", "Invalid username or password.");
             }
         } catch (error) {
-            if (error.response) {
-                if (error.response.status === 401) {
-                    Alert.alert("Login Failed", "Invalid username or password.");
-                } else if (error.response.status === 400) {
-                    Alert.alert("Fejl i login", `${error.response.data}`);
-                } else {
-                    Alert.alert(
-                        "Error",
-                        "An unexpected error occurred. Please try again."
-                    );
-                }
-            } else if (error.request) {
-                Alert.alert(
-                    "Network Error",
-                    "No response from the server. Please try again later."
-                );
-            } else {
-                Alert.alert("Error", "An unexpected error occurred. Please try again.");
-            }
+            Alert.alert("Error", "An unexpected error occurred. Please try again.");
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <View style={styles.container}>
-            <Image
-                source={require("../assets/images/itdepot.webp")}
-                style={styles.logo}
-            />
+        <View style={[styles.container, orientation === "landscape" && styles.landscapeContainer]}>
+            <Image source={require("../assets/images/itdepot.webp")} style={styles.logo} />
             <View style={styles.titleContainer}>
                 <Text style={styles.title}>Velkommen tilbage!</Text>
                 <Text style={styles.subTitle}>Log ind herunder</Text>
             </View>
             <View style={styles.inputContainer}>
                 <TextInput
-                    style={styles.input}
+                    style={[styles.input, orientation === "landscape" && styles.landscapeInput]}
                     placeholder="Brugernavn"
                     value={username}
                     onChangeText={setUsername}
                     autoCapitalize="none"
                 />
-
                 <View style={styles.adgangskodeContainer}>
                     <TextInput
-                        style={styles.input}
+                        style={[styles.input, orientation === "landscape" && styles.landscapeInput]}
                         placeholder="Adgangskode"
                         secureTextEntry
                         value={password}
@@ -96,24 +98,11 @@ const LoginPage = () => {
                     />
                     <Text style={styles.forgottenText}>Glemt adgangskode</Text>
                 </View>
-
-                <TouchableOpacity
-                    onPress={handleLogin}
-                    disabled={loading}
-                    style={[styles.button, loading && styles.buttonDisabled]} // Ensures the whole button is clickable
-                >
-                    <LinearGradient
-                        colors={["#0891DA", "#08D9C4"]}
-                        start={{ x: 0, y: 0 }}
-                        end={{ x: 1, y: 1 }}
-                        style={styles.buttonContent} // This should be just for the gradient
-                    >
-                        <Text style={styles.buttonText}>
-                            {loading ? "Logging in..." : "Log ind"}
-                        </Text>
+                <TouchableOpacity onPress={handleLogin} disabled={loading} style={[styles.button, loading && styles.buttonDisabled]}>
+                    <LinearGradient colors={["#0891DA", "#08D9C4"]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.buttonContent}>
+                        <Text style={styles.buttonText}>{loading ? "Logging in..." : "Log ind"}</Text>
                     </LinearGradient>
                 </TouchableOpacity>
-
                 <View style={styles.noticeContainer}>
                     <Text style={styles.noticeText}>
                         Ved at oprette eller logge ind på en konto, accepterer du vores{" "}
@@ -121,12 +110,12 @@ const LoginPage = () => {
                         <Text style={styles.b}>Privatlivspolitik</Text>
                     </Text>
                 </View>
-
                 <Text style={styles.newUserText}>
                     Har du ikke en bruger?{" "}
-                    <TouchableOpacity onPress={handleSignUp} >
+                    <TouchableOpacity onPress={handleSignUp}>
                         <Text style={styles.newUser}>Opret bruger</Text>
-                    </TouchableOpacity></Text>
+                    </TouchableOpacity>
+                </Text>
             </View>
         </View>
     );
@@ -140,6 +129,9 @@ const styles = StyleSheet.create({
         padding: 25,
         backgroundColor: "#F8F9FA",
     },
+    landscapeContainer: {
+        padding: 15,
+    },
     titleContainer: {
         marginBottom: 20,
     },
@@ -151,7 +143,7 @@ const styles = StyleSheet.create({
     subTitle: {
         textAlign: "center",
         color: "#363636",
-        fontWeight: 400,
+        fontWeight: "400",
     },
     inputContainer: {
         width: "100%",
@@ -164,6 +156,10 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         paddingHorizontal: 10,
         marginBottom: 15,
+    },
+    landscapeInput: {
+        width: "50%",
+        paddingVertical: 8,
     },
     button: {
         borderRadius: 10,
@@ -183,7 +179,7 @@ const styles = StyleSheet.create({
         textAlign: "center",
     },
     buttonDisabled: {
-        backgroundColor: "#A9A9A9", // Disabled state color
+        backgroundColor: "#A9A9A9",
     },
     logo: {
         width: 200,
@@ -201,7 +197,7 @@ const styles = StyleSheet.create({
         width: "100%",
         textAlign: "right",
         textDecorationLine: "underline",
-        fontWeight: 500,
+        fontWeight: "500",
     },
     noticeContainer: {
         textAlign: "center",
@@ -215,12 +211,12 @@ const styles = StyleSheet.create({
         color: "#939393",
     },
     b: {
-        fontWeight: 600,
+        fontWeight: "600",
         textDecorationLine: "underline",
         color: "#363636",
     },
     newUserText: {
-        fontWeight: 700,
+        fontWeight: "700",
         textAlign: "center",
         marginTop: 50,
         color: "#363636",
