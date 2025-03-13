@@ -7,10 +7,11 @@ const Mere = () => {
     <View style={styles.choiceContainer}>
       <Text style={styles.header}>Mere</Text>
       <View style={styles.hr} />
-      <Choice text="Andet choice" />
-      <Choice text="Andet choice" />
-      <Choice text="Andet choice" />
-      <Choice text="Andet choice" />
+      <Choice text="Touch Input Testing" route="/touchinputtest" />
+      <Choice text="Gyroskop:" />
+      <Choice type="gyroscope" />
+      <Choice type="sendsms" />
+      <Choice type="gps" />
       <Text style={styles.copyright}>
         © 2025 ITDepot. Alle rettigheder forbeholdes.
       </Text>

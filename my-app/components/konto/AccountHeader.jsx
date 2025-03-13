@@ -13,6 +13,7 @@ import { useFocusEffect } from "@react-navigation/native";
 const AccountHeader = () => {
   const [fullname, setFullname] = useState("");
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
 
   // Get userdata
   const fetchUserData = async () => {
@@ -20,6 +21,11 @@ const AccountHeader = () => {
       const storedFullname = await AsyncStorage.getItem("fullname");
       if (storedFullname) {
         setFullname(storedFullname);
+      }
+
+      const storedUsername = await AsyncStorage.getItem("username");
+      if (storedUsername) {
+        setUsername(storedUsername);
       }
 
       const userId = await AsyncStorage.getItem("userId");
@@ -69,7 +75,10 @@ const AccountHeader = () => {
       </View>
 
       <View style={styles.accountInfo}>
-        <Text style={styles.accountFullname}>{fullname}</Text>
+        <View style={styles.accountHeaderInfo}>
+          <Text style={styles.accountFullname}>{fullname}</Text>
+          <Text style={styles.accountUsername}>{username}</Text>
+        </View>
         <Text style={styles.accountEmail}>{email}</Text>
       </View>
     </View>
@@ -100,6 +109,8 @@ const styles = StyleSheet.create({
   },
   accountInfo: {
     marginLeft: 10,
+    maxWidth: "300",
+    alignItems: "flex-start",
   },
   accountFullname: {
     fontWeight: 700,
@@ -111,6 +122,22 @@ const styles = StyleSheet.create({
     fontWeight: 450,
     fontSize: 15,
   },
+  accountUsername: {
+    paddingHorizontal: 12,
+    paddingVertical: 3,
+    fontSize: 15,
+    fontWeight: 500,
+    borderRadius: 6,
+    color: "white",
+    backgroundColor: "#08B6CF",
+    marginLeft: 10,
+    marginBottom: 5
+  },
+  accountHeaderInfo: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignItems: "center",
+  }
 });
 
 export default AccountHeader;
